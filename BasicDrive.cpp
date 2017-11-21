@@ -1,6 +1,11 @@
 #include "BasicDrive.h"
 
-BasicDrive::BasicDrive(Collection<int> leftMotorPins, Collection<int> leftEncoderPins, Collection<int> rightMotorPins, Collection<int> rightEncoderPins)
+BasicDrive::BasicDrive()
+{
+	
+}
+
+void BasicDrive::begin(Collection<int> leftMotorPins, Collection<int> leftEncoderPins, Collection<int> rightMotorPins, Collection<int> rightEncoderPins)
 {
 	int leftEncA = leftEncoderPins.get(0);
 	int leftEncB = leftEncoderPins.get(1);
