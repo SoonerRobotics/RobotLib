@@ -12,6 +12,9 @@ void BasicDrive::begin(Collection<int> leftMotorPins, Collection<int> leftEncode
 	
 	int rightEncA = rightEncoderPins.get(0);
 	int rightEncB = rightEncoderPins.get(1);
+	
+	Encoder right(rightEncA, rightEncB);
+	this->rightEncoder = right;
 }
 
 void BasicDrive::setOutput(float left, float right)
