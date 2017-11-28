@@ -6,7 +6,7 @@ class MotorController
 	public:
 		MotorController();
 		
-		void begin(int leftA, int leftB, int rightA, int rightB);
+		void begin(int leftA, int leftB, int leftEnb,int rightA, int rightB, int rightEnb);
 		
 		void outputLeft(float out);
 		
@@ -17,6 +17,8 @@ class MotorController
 		int leftB;
 		int rightA;
 		int rightB;
+		int leftEnb;
+		int rightEnb;
 };
 
 #endif
