@@ -3,13 +3,15 @@
 
 #include <Arduino.h>
 #include "Encoder.h"
+#include "MotorController.h"
 #include "Collection.h"
 
 class BasicDrive
 {
 	public:
 		BasicDrive();
-		BasicDrive(Collection<int> leftMotorPins, Collection<int> leftEncoderPins, Collection<int> rightMotorPins, Collection<int> rightEncoderPins);
+		
+		void begin(Collection<int> leftMotorPins, Collection<int> leftEncoderPins, Collection<int> rightMotorPins, Collection<int> rightEncoderPins);
 		
 		void setOutput(float left, float right);
 		
@@ -22,7 +24,7 @@ class BasicDrive
 		
 		Encoder rightEncoder;
 		
-		//MotorController motorControl;
+		MotorController motorController;
 };
 
 #endif

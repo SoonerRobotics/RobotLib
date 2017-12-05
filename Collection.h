@@ -29,14 +29,14 @@ class Collection
 			this->numItems++;
 		}
 		
-		T* get(int index)
+		T& get(int index)
 		{
-			if(index < numItems && index >= 0)
-			{
-				return &this->collection[index];
-			}
-			
-			return NULL;
+			return this->collection[index];
+		}
+		
+		int getSize()
+		{
+			return numItems;
 		}
 		
 	private:

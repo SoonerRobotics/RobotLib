@@ -24,7 +24,7 @@ class BasicDrive
 		
 		Encoder rightEncoder;
 		
-		MotorController motorControl;
+		MotorController motorController;
 };
 
 #endif
