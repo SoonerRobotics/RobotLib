@@ -68,7 +68,7 @@ int Collection<T>::getSize()
 }
 
 template<class T>
-void alloc(int newSize)
+void Collection<T>::alloc(int newSize)
 {
 	T* temp = new T[newSize];
 	
