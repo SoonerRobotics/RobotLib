@@ -12,9 +12,7 @@ class DigitalDevice
 		
 		void operator=(const DigitalDevice& digitalDevice);
 		
-		void setPin(int pinA);
-		
-		void setType(int type);
+		void update(int pin, int type);
 		
 		void write(int value);
 		

@@ -20,22 +20,24 @@ void DigitalDevice::operator=(const DigitalDevice& digitalDevice)
 	this->type = digitalDevice.type;
 }
 
-void DigitalDevice::setPin(int pinA)
+void DigitalDevice::update(int pin, int type)
 {
+	this->pin = pin;
+	this->type = type;
 	
-}
-
-void DigitalDevice::setType(int type)
-{
-	
+	pinMode(pin, type);	
 }
 
 void DigitalDevice::write(int value)
 {
-	
+	if(value == HIGH || value == LOW || value == 1 || value == 0)
+	{
+		digitalWrite(pin, value);
+	}
 }
 
 int DigitalDevice::read()
 {
-	
+	int value = digitalRead(pin);
+	return value;
 }
