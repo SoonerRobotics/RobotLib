@@ -11,7 +11,9 @@
 #include "Collection.h"
 #include "DigitalDevice.h"
 #include "Encoder.h"
+#include "Motor.h"
 #include "MotorController.h"
 #include "PIDController.h"
+
 
 #endif
