@@ -1,42 +1,60 @@
 #include "PIDController.h"
 
+PIDController::PIDController()
+{
+    this->last_process_var = 0;
+    this->err = 0;
+	this->integrator = 0;
+
+    this->kP = 0;
+    this->kI = 0;
+    this->kD = 0;
+
+    this->low = -1;
+    this->high = 1;	
+}
+
 PIDController::PIDController(float process_init, float *k)
 {
-    last_process_var = process_init;
-    err = 0;
-    integrator = 0;
+    this->last_process_var = process_init;
+    this->err = 0;
+	this->integrator = 0;
 
-    kP = k[0];
-    kI = k[1];
-    kD = k[2];
+    this->kP = k[0];
+    this->kI = k[1];
+    this->kD = k[2];
 
-    low = -1;
-    high = 1;
+    this->low = -1;
+    this->high = 1;
 }
 
-void PIDController::reinitialize(float process_init)
+void PIDController::initialize(float process_init, Collection<float> K)
 {
-    last_process_var = process_init;
+    this->last_process_var = process_init;
+	
+	this->kP = K.get(0);
+    this->kI = K.get(1);
+    this->kD = K.get(2);
 
-    err = 0;
-    integrator = 0;
+    this->err = 0;
+    this->integrator = 0;
 }
 
-float PIDController::GetOutput(float setpoint, float process)
+float PIDController::getOutput(float setpoint, float process)
 {
-    err = setpoint - process;
+    this->err = setpoint - process;
     float P = kP * err;
 
-    integrator += err;
-    integrator = coerce(integrator, high, low);
-    float I = kI * integrator;
+    this->integrator += err;
+    this->integrator = coerce(integrator, high, low); //Should it be like this?
+    float I = this->kI * this->integrator;
 
-    float delta = process - last_process_var;
-    float D = kD * delta;
+    float delta = process - this->last_process_var;
+    float D = this->kD * delta;
 
-    float output = coerce(P + I + D, high, low);
+    float output = coerce(P + I + D, this->high, this->low);
 
-    last_process_var = process;
+    this->last_process_var = process;
 
     return output;
 }
@@ -54,13 +72,8 @@ float PIDController::coerce(float val, float upper, float lower)
     return val;
 }
 
-void PIDController::SetOutputRange(float upper, float lower)
+void PIDController::setOutputRange(float upper, float lower)
 {
-	high = upper;
-	low = lower;
-}
-
-PIDController::~PIDController()
-{
-    //dtor
+	this->high = upper;
+	this->low = lower;
 }

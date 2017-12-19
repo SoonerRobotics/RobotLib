@@ -19,7 +19,7 @@ class BasicDrive
 		
 		Encoder& getRightEncoder();
 		
-	private:
+	protected:
 		Encoder leftEncoder;
 		
 		Encoder rightEncoder;

@@ -23,11 +23,22 @@ void BasicDrive::begin(Collection<int> leftMotorPins, Collection<int> leftEncode
 	int rightMotB = rightMotorPins.get(1);
 	int rightMotEnb = rightMotorPins.get(2);
 	
+<<<<<<< Updated upstream
 	//Encoder rightEnc(rightEncA, rightEncB);
 	//this->rightEncoder = rightEnc;
+=======
+	Motor left;
+	left.begin(leftMotA, leftMotB, leftMotEnb);
 	
-	//Encoder leftEnc(leftEncA, leftEncB);
-	//this->leftEncoder = leftEnc;
+	Motor right;
+	right.begin(rightMotA, rightMotB, rightMotEnb);
+	
+	Encoder rightEnc(rightEncA, rightEncB);
+	this->rightEncoder = rightEnc;
+>>>>>>> Stashed changes
+	
+	Encoder leftEnc(leftEncA, leftEncB);
+	this->leftEncoder = leftEnc;
 	
 	MotorController controller;
 	controller.begin(leftMotA, leftMotB, leftMotEnb, rightMotA, rightMotB, rightMotEnb);
