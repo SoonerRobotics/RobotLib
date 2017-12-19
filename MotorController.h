@@ -2,27 +2,24 @@
 #define MOTORCONTROLLER_H
 
 #include <Arduino.h>
+#include "Motor.h"
 
 class MotorController
 {
 	public:
 		MotorController();
 		
-		void begin(int leftA, int leftB, int leftEnb,int rightA, int rightB, int rightEnb);
+		void begin(Motor motorA, Motor motorB);
 		
-		void outputLeft(float out);
+		void outputMotorA(float out);
 		
-		void outputRight(float out);
+		void outputMotorB(float out);
 		
 	private:
-		int leftA;
-		int leftB;
-		int rightA;
-		int rightB;
-		int leftEnb;
-		int rightEnb;
+		Motor motorA;
 		
-		float coerce(float val, float upper, float lower);
+		Motor motorB;
+		
 };
 
 #endif

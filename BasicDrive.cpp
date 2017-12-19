@@ -3,9 +3,7 @@
 #include "MotorController.h"
 
 BasicDrive::BasicDrive()
-{
-	
-}
+{}
 
 void BasicDrive::begin(Collection<int> leftMotorPins, Collection<int> leftEncoderPins, Collection<int> rightMotorPins, Collection<int> rightEncoderPins)
 {
@@ -35,16 +33,30 @@ void BasicDrive::begin(Collection<int> leftMotorPins, Collection<int> leftEncode
 	Encoder leftEnc(leftEncA, leftEncB);
 	this->leftEncoder = leftEnc;
 	
+	//Left = A 
+	//Right = B
 	MotorController controller;
 	controller.begin(left, right);
 	this->motorController = controller;
 }
 
+void BasicDrive::begin(Motor leftMot, Motor rightMot, Encoder leftEnc, Encoder rightEnc)
+{
+	MotorController controller;
+	controller.begin(leftMot, rightMot);
+
+	this->motorController = controller;
+	
+	this->leftEncoder = leftEnc;
+	
+	this->rightEncoder = rightEnc;
+}
+
 void BasicDrive::setOutput(float leftOut, float rightOut)
 {
-	motorController.outputLeft(leftOut);
+	motorController.outputMotorA(leftOut);
 	
-	motorController.outputRight(rightOut);
+	motorController.outputMotorB(rightOut);
 }
 
 Encoder& BasicDrive::getLeftEncoder()
