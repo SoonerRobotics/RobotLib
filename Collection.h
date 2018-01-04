@@ -8,8 +8,10 @@ class Collection
 		Collection();
 		
 		Collection(int size);
+		void operator=(const Collection& c);
 		
 		void add(T t);
+		void set(int index, T t);
 		
 		T& get(int index);
 		
@@ -45,6 +47,17 @@ Collection<T>::Collection(int size)
 }
 
 template<class T>
+Collection<T>::operator=(const Collection& c)
+{
+	alloc(c.size);
+	
+	for(int i = 0; i < c.numItems; ++i)
+	{
+		this->collection[i] = c.collection[i];
+	}
+}
+
+template<class T>
 void Collection<T>::add(T t)
 {
 	if((numItems + 1) >= size)
@@ -53,6 +66,15 @@ void Collection<T>::add(T t)
 	}
 	this->collection[numItems] = t;
 	this->numItems++;
+}
+
+template<class T>
+void Collection<T>::set(int index, T t)
+{
+	if(index < numItems && index >= 0)
+	{
+		this->collection[index] = t;
+	}
 }
 
 template<class T>
