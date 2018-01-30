@@ -68,3 +68,9 @@ Encoder& BasicDrive::getRightEncoder()
 {
 	return this->rightEncoder;
 }
+
+void BasicDrive::resetEncoders()
+{
+	leftEncoder.reset();
+	rightEncoder.reset();
+}

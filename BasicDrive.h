@@ -21,6 +21,8 @@ class BasicDrive
 		
 		Encoder& getRightEncoder();
 		
+		void resetEncoders();
+		
 	private:
 		Encoder leftEncoder;
 		
