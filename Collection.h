@@ -47,7 +47,7 @@ Collection<T>::Collection(int size)
 }
 
 template<class T>
-Collection<T>::operator=(const Collection& c)
+void Collection<T>::operator=(const Collection<T>& c)
 {
 	alloc(c.size);
 	

@@ -26,7 +26,7 @@ class PIDController
         float kP;
         float kI;
         float kD;
-        float high
+        float high;
 		float low;
 
         float coerce(float val, float upper, float lower);
