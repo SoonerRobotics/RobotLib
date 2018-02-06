@@ -1,6 +1,4 @@
 #include "BasicDrive.h"
-#include "Encoder.h"
-#include "MotorController.h"
 
 BasicDrive::BasicDrive()
 {}
