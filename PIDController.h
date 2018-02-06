@@ -8,8 +8,8 @@ class PIDController
     public:
         PIDController(float process_init, float *k);
         virtual ~PIDController();
-        float GetOutput(float setpoint, float process);
-        void SetOutputRange(float upper, float lower);
+        float getOutput(float setpoint, float process);
+        void setOutputRange(float upper, float lower);
         void reinitialize(float process_init);
     protected:
 

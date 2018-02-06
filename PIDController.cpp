@@ -22,7 +22,7 @@ void PIDController::reinitialize(float process_init)
     integrator = 0;
 }
 
-float PIDController::GetOutput(float setpoint, float process)
+float PIDController::getOutput(float setpoint, float process)
 {
     err = setpoint - process;
     float P = kP * err;
@@ -54,7 +54,7 @@ float PIDController::coerce(float val, float upper, float lower)
     return val;
 }
 
-void PIDController::SetOutputRange(float upper, float lower)
+void PIDController::setOutputRange(float upper, float lower)
 {
 	high = upper;
 	low = lower;
