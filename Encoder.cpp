@@ -4,6 +4,7 @@ Encoder::Encoder()
 {
 	this->A = -1;
 	this->B = -1;
+	this->K = 1;
 }
 
 Encoder::Encoder(int pinA, int pinB)
@@ -13,6 +14,17 @@ Encoder::Encoder(int pinA, int pinB)
 	
 	this->A = pinA;
 	this->B = pinB;
+	this->K = 1;
+}
+
+Encoder::Encoder(int pinA, int pinB, float K)
+{
+	pinMode(pinA, INPUT);
+	pinMode(pinB, INPUT);
+	
+	this->A = pinA;
+	this->B = pinB;
+	this->K = K;
 }
 
 void Encoder::operator=(const Encoder& encoder)
@@ -23,6 +35,7 @@ void Encoder::operator=(const Encoder& encoder)
 	this->A = encoder.A;
 	this->B = encoder.B;
 	this->ticks = encoder.ticks;
+	this->K = encoder.K;
 }
 
 int Encoder::getTicks()
@@ -30,9 +43,14 @@ int Encoder::getTicks()
 	return this->ticks;
 }
 
+float Encoder::getValue()
+{
+	return (K * this->ticks);
+}
+
 void Encoder::process()
 {
-	if(digitalRead(A) == digitalRead(B))
+	if(digitalRead(this->A) == digitalRead(this->B))
   	{
     	++ticks;
   	}
@@ -55,4 +73,9 @@ void Encoder::setPinA(int pinA)
 void Encoder::setPinB(int pinB)
 {
 	this->B = pinB;
+}
+
+void Encoder::setConstant(float K)
+{
+	this->K = K;
 }

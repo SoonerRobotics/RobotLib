@@ -1,16 +1,22 @@
 #ifndef PIDCONTROLLER_H
 #define PIDCONTROLLER_H
 
-using namespace std;
+#include "Collection.h"
 
 class PIDController
 {
     public:
-        PIDController(float process_init, float *k);
-        virtual ~PIDController();
+
+		PIDController();
+		
+        PIDController(float process_init, Collection<float> K);
+		
         float getOutput(float setpoint, float process);
+		
         void setOutputRange(float upper, float lower);
-        void reinitialize(float process_init);
+		
+        void initialize(float process_init, Collection<float> K);
+
     protected:
 
     private:
@@ -20,7 +26,8 @@ class PIDController
         float kP;
         float kI;
         float kD;
-        float high, low;
+        float high
+		float low;
 
         float coerce(float val, float upper, float lower);
 };

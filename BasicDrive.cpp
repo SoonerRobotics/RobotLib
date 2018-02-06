@@ -1,6 +1,4 @@
 #include "BasicDrive.h"
-#include "Encoder.h"
-#include "MotorController.h"
 
 BasicDrive::BasicDrive()
 {}
@@ -27,12 +25,11 @@ void BasicDrive::begin(Collection<int> leftMotorPins, Collection<int> leftEncode
 	Motor right;
 	right.begin(rightMotA, rightMotB, rightMotEnb);
 	
-	//TODO: Enable once the encoders are hooked up
-	//Encoder rightEnc(rightEncA, rightEncB);
-	//this->rightEncoder = rightEnc;
+	Encoder rightEnc(rightEncA, rightEncB);
+	this->rightEncoder = rightEnc;
 	
-	//Encoder leftEnc(leftEncA, leftEncB);
-	//this->leftEncoder = leftEnc;
+	Encoder leftEnc(leftEncA, leftEncB);
+	this->leftEncoder = leftEnc;
 	
 	//Left = A 
 	//Right = B
@@ -45,6 +42,7 @@ void BasicDrive::begin(Motor leftMot, Motor rightMot, Encoder leftEnc, Encoder r
 {
 	MotorController controller;
 	controller.begin(leftMot, rightMot);
+
 	this->motorController = controller;
 	
 	this->leftEncoder = leftEnc;
