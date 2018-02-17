@@ -5,6 +5,7 @@ Encoder::Encoder()
 	this->A = -1;
 	this->B = -1;
 	this->K = 1;
+	this->ticks = 0;
 }
 
 Encoder::Encoder(int pinA, int pinB)
@@ -25,6 +26,7 @@ Encoder::Encoder(int pinA, int pinB, float K)
 	this->A = pinA;
 	this->B = pinB;
 	this->K = K;
+	this->ticks = 0;
 }
 
 void Encoder::operator=(const Encoder& encoder)
