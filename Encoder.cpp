@@ -16,6 +16,7 @@ Encoder::Encoder(int pinA, int pinB)
 	this->A = pinA;
 	this->B = pinB;
 	this->K = 1;
+	this->ticks = 0;
 }
 
 Encoder::Encoder(int pinA, int pinB, float K)
