@@ -1,6 +1,7 @@
 #ifndef PIDCONTROLLER_H
 #define PIDCONTROLLER_H
 
+#include <Arduino.h>
 #include "Collection.h"
 
 class PIDController

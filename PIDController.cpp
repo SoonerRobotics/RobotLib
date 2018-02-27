@@ -36,6 +36,10 @@ void PIDController::initialize(float process_init, Collection<float> K)
     this->kI = K.get(1);
     this->kD = K.get(2);
 
+	Serial.print(kP);
+	Serial.print(kI);
+	Serial.println(kD);
+	
     this->err = 0;
     this->integrator = 0;
 }
