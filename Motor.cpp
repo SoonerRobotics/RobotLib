@@ -52,9 +52,9 @@ void Motor::output(float out)
 		analogWrite(this->enable, abs(out) * 255);
 	}
 	else if (out == 0) {
-		digitalWrite(this->A, LOW);
-		digitalWrite(this->B, LOW);
-		analogWrite(this->enable, 0);
+		digitalWrite(this->A, HIGH);
+		digitalWrite(this->B, HIGH);
+		analogWrite(this->enable, 255);
 	}
 }
 

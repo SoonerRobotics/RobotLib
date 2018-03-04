@@ -21,8 +21,11 @@ PIDController::PIDController(float process_init, Collection<float> K)
 	this->integrator = 0;
 
 	this->kP = K.get(0);
+	Serial.print(kP);
     this->kI = K.get(1);
+	Serial.print(kI);
     this->kD = K.get(2);
+	Serial.print(kD);
 
     this->low = -1;
     this->high = 1;
@@ -60,6 +63,15 @@ float PIDController::getOutput(float setpoint, float process)
 
     this->last_process_var = process;
 
+	/*
+	Serial.print("\t");
+	Serial.print(kP);
+	Serial.print("\t");
+	Serial.print(kI);
+	Serial.print("\t");
+	Serial.print(kD);
+	*/
+	
     return output;
 }
 
