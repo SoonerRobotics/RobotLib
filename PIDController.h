@@ -36,8 +36,9 @@ class PIDController
 		
 		unsigned long lastTime;
 		double outputSum, lastInput;
-
 		unsigned long SampleTime;
+		
+		
 		//double outMin, outMax;
 		//bool inAuto, pOnE;
 };

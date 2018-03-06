@@ -20,12 +20,12 @@ PIDController::PIDController(float process_init, Collection<float> K)
     this->err = 0;
 	this->integrator = 0;
 
-	this->kP = K.get(0);
+	/*this->kP = K.get(0);
 	Serial.print(kP);
     this->kI = K.get(1);
 	Serial.print(kI);
     this->kD = K.get(2);
-	Serial.print(kD);
+	Serial.print(kD);*/
 
     this->low = -1;
     this->high = 1;
@@ -39,10 +39,11 @@ void PIDController::initialize(float process_init, Collection<float> K)
     this->kI = K.get(1);
     this->kD = K.get(2);
 
+	/*
 	Serial.print(kP);
 	Serial.print(kI);
 	Serial.println(kD);
-	
+	*/
     this->err = 0;
     this->integrator = 0;
 	
@@ -77,40 +78,42 @@ float PIDController::getOutput(float setpoint, float process)
     return output;
 }
 
+
 float PIDController::getOutput2(float setpoint, float process)
 {
 	unsigned long now = millis();
 	
-		/*Compute all the working error variables*/
+		//Compute all the working error variables
 		double input = process;
 		double error = setpoint - input;
 		double dInput = (input - lastInput);
 		outputSum+= (kI * error);
 
-		/*Add Proportional on Measurement, if P_ON_M is specified*/
+		//Add Proportional on Measurement, if P_ON_M is specified
 		//if(!pOnE) outputSum-= kP * dInput;
 
 		if(outputSum > 1) outputSum= 1;
 		else if(outputSum < -1) outputSum= -1;
 
-		/*Add Proportional on Error, if P_ON_E is specified*/
+		//Add Proportional on Error, if P_ON_E is specified
 		double output;
 		//if(pOnE)
 			output = kP * error;
 		//else output = 0;
 
-		/*Compute Rest of PID Output*/
+		//Compute Rest of PID Output//
 		output += outputSum - kD * dInput;
 
 	    if(output > 1) output = 1;
 		else if(output < -1) output = -1;
 
-		/*Remember some variables for next time*/
+		//Remember some variables for next time//
 		lastInput = input;
 		lastTime = now;
 		
 	    return output;
 }
+
 
 float PIDController::coerce(float val, float upper, float lower)
 {
