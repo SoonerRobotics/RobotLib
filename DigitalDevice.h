@@ -16,6 +16,9 @@ class DigitalDevice
 		
 		void write(int value);
 		
+		void pullUp();
+		void pullDown();
+		
 		int read();
 	
 	private:

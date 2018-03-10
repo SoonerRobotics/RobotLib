@@ -14,34 +14,27 @@ PIDController::PIDController()
     this->high = 1;	
 }
 
-PIDController::PIDController(float process_init, Collection<float> K)
+PIDController::PIDController(float process_init, float kp, float ki, float kd)
 {
     this->last_process_var = process_init;
     this->err = 0;
 	this->integrator = 0;
 
-	this->kP = K.get(0);
-	Serial.print(kP);
-    this->kI = K.get(1);
-	Serial.print(kI);
-    this->kD = K.get(2);
-	Serial.print(kD);
+	this->kP = kp;
+    this->kI = ki;
+    this->kD = kd;
 
     this->low = -1;
     this->high = 1;
 }
 
-void PIDController::initialize(float process_init, Collection<float> K)
+void PIDController::initialize(float process_init, float kp, float ki, float kd)
 {
     this->last_process_var = process_init;
 	
-	this->kP = K.get(0);
-    this->kI = K.get(1);
-    this->kD = K.get(2);
-
-	Serial.print(kP);
-	Serial.print(kI);
-	Serial.println(kD);
+	this->kP = kp;
+    this->kI = ki;
+    this->kD = kd;
 	
     this->err = 0;
     this->integrator = 0;

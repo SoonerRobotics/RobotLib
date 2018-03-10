@@ -10,7 +10,7 @@ class PIDController
 
 		PIDController();
 		
-        PIDController(float process_init, Collection<float> K);
+        PIDController(float process_init, float kp, float ki, float kd);
 		
         float getOutput(float setpoint, float process);
 		
@@ -18,7 +18,7 @@ class PIDController
 		
         void setOutputRange(float upper, float lower);
 		
-        void initialize(float process_init, Collection<float> K);
+        void initialize(float process_init, float kp, float ki, float kd);
 
     protected:
 

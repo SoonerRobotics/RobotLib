@@ -36,6 +36,16 @@ void DigitalDevice::write(int value)
 	}
 }
 
+void DigitalDevice::pullUp()
+{
+	digitalWrite(pin, HIGH);
+}
+
+void DigitalDevice::pullDown()
+{
+	digitalWrite(pin, LOW);
+}
+
 int DigitalDevice::read()
 {
 	int value = digitalRead(pin);
