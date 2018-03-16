@@ -29,7 +29,7 @@ class Encoder
 		void setConstant(float K);
 	
 	private:
-		int ticks;
+		volatile int ticks;
 		
 		int A;
 		
