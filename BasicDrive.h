@@ -13,7 +13,7 @@ class BasicDrive
 		
 		void begin(Collection<int> leftMotorPins, Collection<int> leftEncoderPins, Collection<int> rightMotorPins, Collection<int> rightEncoderPins);
 		
-		void begin(Motor leftMot, Motor rightMot, Encoder leftEnc, Encoder rightEnc);
+		void begin(Motor& leftMot, Motor& rightMot, Encoder& leftEnc, Encoder& rightEnc);
 		
 		void setOutput(float left, float right);
 		

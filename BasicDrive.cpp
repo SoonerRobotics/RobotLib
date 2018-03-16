@@ -38,7 +38,7 @@ void BasicDrive::begin(Collection<int> leftMotorPins, Collection<int> leftEncode
 	this->motorController = controller;
 }
 
-void BasicDrive::begin(Motor leftMot, Motor rightMot, Encoder leftEnc, Encoder rightEnc)
+void BasicDrive::begin(Motor& leftMot, Motor& rightMot, Encoder& leftEnc, Encoder& rightEnc)
 {
 	MotorController controller;
 	controller.begin(leftMot, rightMot);
