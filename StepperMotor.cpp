@@ -32,7 +32,7 @@ void StepperMotor::begin(int step, int dir, int enable, int stepsPerRotation)
 	if(enable != -1)
 	{
 		pinMode(enable, OUTPUT);
-		digitalWrite(enable, LOW);
+		digitalWrite(enable, HIGH);
 	}
 }
 
@@ -43,6 +43,12 @@ void StepperMotor::setRPM(float speed)
 
 void StepperMotor::step(int steps)
 {
+	//Enable the motor for movement
+	if(this->enable != -1)
+	{
+		digitalWrite(this->enable, LOW);
+	}
+	
 	int direction = 0;
 	bool millisecond_interval = true;
 	
@@ -82,6 +88,12 @@ void StepperMotor::step(int steps)
 		}
 		
 		this->currentSteps += direction;
+	}
+	
+	//Disable the motor to let it cool off
+	if(this->enable != -1)
+	{
+		digitalWrite(this->enable, HIGH);
 	}
 }
 
