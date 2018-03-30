@@ -41,7 +41,7 @@ void Encoder::operator=(const Encoder& encoder)
 	this->K = encoder.K;
 }
 
-int Encoder::getTicks()
+long Encoder::getTicks()
 {
 	return this->ticks;
 }

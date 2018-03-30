@@ -16,7 +16,7 @@ class Encoder
 		
 		void process();
 	
-		int getTicks();
+		long getTicks();
 		
 		float getValue();
 		
@@ -29,7 +29,7 @@ class Encoder
 		void setConstant(float K);
 	
 	private:
-		volatile int ticks;
+		volatile long ticks;
 		
 		int A;
 		
