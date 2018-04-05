@@ -50,7 +50,7 @@ void StepperMotor::step(int steps)
 	}
 	
 	int direction = 0;
-	bool millisecond_interval = true;
+	bool millisecond_interval = false;
 	
 	if(steps < 0)
 	{
@@ -64,17 +64,17 @@ void StepperMotor::step(int steps)
 	}
 	
 	//Determine how many microseconds we want to wait, and convert to an integer
-	double totalTime = (static_cast<double>(steps) / this->stepsPerRotation) / this->rpm * 60.0 * 1000.0; 	
-	double T = (totalTime / steps) / 2;
+	double totalTime = (static_cast<double>(abs(steps)) / this->stepsPerRotation) / this->rpm * 60.0 * 1000.0 * 1000.0; 	
+	double T = (totalTime / abs(steps)) / 2;
 	
-	//Convert to microseconds if delay would be 0.
-	if(T < 1)
+	//Convert to milliseconds if delay would be too big for us.
+	if(T > 5000)
 	{
-		T*=1000;
-		millisecond_interval = false;
+		T/=1000;
+		millisecond_interval = true;
 	}
 	
-	unsigned long stepWait = static_cast<int>(T);
+	unsigned long stepWait = static_cast<unsigned long>(T);
 	
 	for(int i = 0; i < abs(steps); ++i)
 	{
