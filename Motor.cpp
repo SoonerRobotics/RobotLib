@@ -37,6 +37,22 @@ void Motor::begin(int A, int B, int enable)
 	}
 }
 
+void Motor::begin(int A, int B)
+{
+	this->A = A;
+	this->B = B;
+	
+	if(A != NULL)
+	{
+		pinMode(A, OUTPUT);
+	}
+	
+	if(B != NULL)
+	{
+		pinMode(B, OUTPUT);
+	}
+}
+
 void Motor::output(float out)
 {
 	out = coerce(out, 1, -1);
@@ -58,7 +74,25 @@ void Motor::output(float out)
 	}
 }
 
-
+void Motor::output2(float out)
+{
+	out = coerce(out, 1, -1);
+	
+	if(out > 0) 
+	{
+		analogWrite(this->A, (int)(abs(out) * 255) );
+		analogWrite(this->B, 0);
+	}
+	else if (out < 0) 
+	{
+		analogWrite(this->A, 0);
+		analogWrite(this->B, (int)(abs(out) * 255) );
+	}
+	else if (out == 0) {
+		analogWrite(this->A, 0);
+		analogWrite(this->B, 0);
+	}
+}
 
 /**
  * Private Functions Below
