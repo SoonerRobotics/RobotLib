@@ -12,6 +12,8 @@ class PIDController
 		
         PIDController(float process_init, float kp, float ki, float kd);
 		
+		void operator=(const PIDController& pidController);
+		
         float getOutput(float setpoint, float process);
 		
 		float getOutput2(float setpoint, float process);
@@ -33,14 +35,6 @@ class PIDController
 		float low;
 
         float coerce(float val, float upper, float lower);
-		
-		unsigned long lastTime;
-		double outputSum, lastInput;
-		unsigned long SampleTime;
-		
-		
-		//double outMin, outMax;
-		//bool inAuto, pOnE;
 };
 
 #endif // PIDCONTROLLER_H
