@@ -110,6 +110,7 @@ void Motor::outputBool(int high) {
 	} else {
 		digitalWrite(this->in1pin, high);
 		digitalWrite(this->in2pin, high);
+		analogWrite(this->enpin, 0);
 	}
 }
 
