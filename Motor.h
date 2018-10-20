@@ -5,23 +5,50 @@
 
 class Motor
 {
+
 	public:
 		Motor();
 		
 		void operator=(const Motor& motor);
 		
-		void begin(int A, int B, int Enb);
-		void begin(int A, int B);
+		/**
+		 * Initialize a 2 pin motor.
+		 */
+		Motor* begin(int in1pin, int in2pin);
+		/**
+		 * Initialize a 3 pin motor.
+		 */
+		Motor* begin(int in1pin, int in2pin, int enpin);
+
+
+		/**
+		 * Set the default signal to send to in1pin and in2pin on 0 speed.
+		 */
+		Motor* setDefaultOnZero(int high);
+
+		/**
+		 * Output a speed to the motor, between -1 and 1.
+		 * Speed of 0 outputs LOW or HIGH to both in1pin and in2pin based
+		 * on setDefaultOnZero(). The default is HIGH.
+		 */
+		void output(float speed);
 		
-		void output(float out);
+		/**
+		 * Sends LOW or HIGH to both in1pin and in2pin.
+		 */
+		void outputBool(int high);
+
+		//For backwards compatibility
 		void output2(float out);
 		
 	private:
-		int A;
-		int B;
-		int enable;
+		int in1pin;
+		int in2pin;
+		int enpin;
+
+		int defaultOnZero = HIGH;
 		
-		float coerce(float val, float upper, float lower);
+		float clamp(float val, float low, float high);
 };
 
 #endif

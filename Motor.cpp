@@ -2,95 +2,134 @@
 
 Motor::Motor()
 {
-	this->A = NULL;
-	this->B = NULL;
-	this->enable = NULL;
+	this->in1pin = -1;
+	this->in2pin = -1;
+	this->enpin = -1;
 }
 
 void Motor::operator=(const Motor& motor)
 {
-	this->A = motor.A;
-	this->B = motor.B;
-	this->enable = motor.enable;
+	this->in1pin = motor.in1pin;
+	this->in2pin = motor.in2pin;
+	this->enpin = motor.enpin;
+}
+
+Motor* Motor::begin(int in1pin, int in2pin)
+{
+	this->in1pin = in1pin;
+	this->in2pin = in2pin;
+	this->enpin = enpin;
+	
+	if(in1pin != -1)
+	{
+		pinMode(in1pin, OUTPUT);
+	}
+	
+	if(in2pin != -1)
+	{
+		pinMode(in2pin, OUTPUT);
+	}
+
+	return this;
 }
 
 
-void Motor::begin(int A, int B, int enable)
+Motor* Motor::begin(int in1pin, int in2pin, int enpin)
 {
-	this->A = A;
-	this->B = B;
-	this->enable = enable;
+	this->in1pin = in1pin;
+	this->in2pin = in2pin;
+	this->enpin = enpin;
 	
-	if(A != NULL)
+	if(in1pin != -1)
 	{
-		pinMode(A, OUTPUT);
+		pinMode(in1pin, OUTPUT);
 	}
 	
-	if(B != NULL)
+	if(in2pin != -1)
 	{
-		pinMode(B, OUTPUT);
+		pinMode(in2pin, OUTPUT);
 	}
 	
-	if(enable != NULL)
+	if(enpin != -1)
 	{
-		pinMode(enable, OUTPUT);
+		pinMode(enpin, OUTPUT);
+	}
+
+	return this;
+}
+
+Motor* Motor::setDefaultOnZero(int high) {
+ 	if (high <= 1 && high >= 0) {
+		this->defaultOnZero = high;
+	}
+	return this;
+}
+
+void Motor::output(float speed)
+{
+	speed = clamp(speed, -1, 1);
+
+	if (enpin != -1) {
+		if(speed > 0) {
+			digitalWrite(this->in1pin, LOW);
+			digitalWrite(this->in2pin, HIGH);
+			analogWrite(this->enpin, speed * 255);
+		}
+		else if (speed < 0) {
+			digitalWrite(this->in1pin, HIGH);
+			digitalWrite(this->in2pin, LOW);
+			analogWrite(this->enpin, abs(speed) * 255);
+		}
+		else if (speed == 0) {
+			digitalWrite(this->in1pin, defaultOnZero);
+			digitalWrite(this->in2pin, defaultOnZero);
+			analogWrite(this->enpin, 255);
+		}
+	} else {
+		if(speed > 0) 
+		{
+			analogWrite(this->in1pin, (int)(abs(speed) * 255) );
+			analogWrite(this->in2pin, 0);
+		}
+		else if (speed < 0) 
+		{
+			analogWrite(this->in1pin, 0);
+			analogWrite(this->in2pin, (int)(abs(speed) * 255) );
+		}
+		else if (speed == 0) {
+			analogWrite(this->in1pin, defaultOnZero);
+			analogWrite(this->in2pin, defaultOnZero);
+		}
 	}
 }
 
-void Motor::begin(int A, int B)
-{
-	this->A = A;
-	this->B = B;
-	
-	if(A != NULL)
-	{
-		pinMode(A, OUTPUT);
-	}
-	
-	if(B != NULL)
-	{
-		pinMode(B, OUTPUT);
-	}
-}
-
-void Motor::output(float out)
-{
-	out = coerce(out, 1, -1);
-	
-	if(out > 0) {
-		digitalWrite(this->A, LOW);
-		digitalWrite(this->B, HIGH);
-		analogWrite(this->enable, out * 255);
-	}
-	else if (out < 0) {
-		digitalWrite(this->A, HIGH);
-		digitalWrite(this->B, LOW);
-		analogWrite(this->enable, abs(out) * 255);
-	}
-	else if (out == 0) {
-		digitalWrite(this->A, HIGH);
-		digitalWrite(this->B, HIGH);
-		analogWrite(this->enable, 255);
+void Motor::outputBool(int high) {
+	if (enpin == -1) {
+		analogWrite(this->in1pin, high);
+		analogWrite(this->in2pin, high);
+	} else {
+		digitalWrite(this->in1pin, high);
+		digitalWrite(this->in2pin, high);
 	}
 }
 
 void Motor::output2(float out)
 {
-	out = coerce(out, 1, -1);
+	out = clamp(out, -1, 1);
 	
 	if(out > 0) 
 	{
-		analogWrite(this->A, (int)(abs(out) * 255) );
-		analogWrite(this->B, 0);
+		analogWrite(this->in1pin, (int)(abs(out) * 255) );
+		analogWrite(this->in2pin, 0);
 	}
 	else if (out < 0) 
 	{
-		analogWrite(this->A, 0);
-		analogWrite(this->B, (int)(abs(out) * 255) );
+		analogWrite(this->in1pin, 0);
+		analogWrite(this->in2pin, (int)(abs(out) * 255) );
 	}
 	else if (out == 0) {
-		analogWrite(this->A, 0);
-		analogWrite(this->B, 0);
+		analogWrite(this->in1pin, 0);
+		analogWrite(this->in2pin, 0);
 	}
 }
 
@@ -98,15 +137,15 @@ void Motor::output2(float out)
  * Private Functions Below
  */
 
-float Motor::coerce(float val, float upper, float lower)
+float Motor::clamp(float val, float low, float high)
 {
-    if(val > upper)
+    if(val > high)
     {
-        return upper;
+        return high;
     }
-    else if(val < lower)
+    else if(val < low)
     {
-        return lower;
+        return low;
     }
     return val;
 }
