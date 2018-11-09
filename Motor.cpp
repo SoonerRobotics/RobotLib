@@ -67,6 +67,10 @@ Motor* Motor::setDefaultOnZero(int high) {
 
 void Motor::output(float speed)
 {
+	if(disabled){
+		return;
+	}
+
 	speed = clamp(speed, -1, 1);
 
 	if (enpin != -1) {
@@ -104,6 +108,10 @@ void Motor::output(float speed)
 }
 
 void Motor::outputBool(int high) {
+	if(disabled){
+		return;
+	}
+
 	if (enpin == -1) {
 		analogWrite(this->in1pin, high);
 		analogWrite(this->in2pin, high);
@@ -116,6 +124,10 @@ void Motor::outputBool(int high) {
 
 void Motor::output2(float out)
 {
+	if(disabled){
+		return;
+	}
+
 	out = clamp(out, -1, 1);
 	
 	if(out > 0) 
@@ -134,6 +146,25 @@ void Motor::output2(float out)
 	}
 }
 
+void Motor::disableOutput()
+{
+	disabled = HIGH;
+
+	if (enpin == -1) {
+		analogWrite(this->in1pin, defaultOnZero);
+		analogWrite(this->in2pin, defaultOnZero);
+	} else {
+		digitalWrite(this->in1pin, defaultOnZero);
+		digitalWrite(this->in2pin, defaultOnZero);
+		analogWrite(this->enpin, 0);
+	}
+}
+
+void Motor::enableOutput()
+{
+	disabled = LOW;
+}
+	
 /**
  * Private Functions Below
  */

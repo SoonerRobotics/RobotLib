@@ -40,6 +40,16 @@ class Motor
 
 		//For backwards compatibility
 		void output2(float out);
+
+		/**
+		 * Disables motor output immediately.
+		 */
+		void disableOutput();
+
+		/**
+		 * Enables motor output after it has been disabled.
+		 */
+		void enableOutput();
 		
 	private:
 		int in1pin;
@@ -47,6 +57,8 @@ class Motor
 		int enpin;
 
 		int defaultOnZero = HIGH;
+
+		bool disabled = LOW;
 		
 		float clamp(float val, float low, float high);
 };
