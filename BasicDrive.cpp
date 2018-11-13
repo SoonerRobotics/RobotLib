@@ -3,6 +3,16 @@
 BasicDrive::BasicDrive()
 {}
 
+/*
+	@param leftMotorPins - Collection with 2 pin numbers for left motor
+
+	@param leftEncoderPins - Collection with 3 pin numbers for left motor encoder
+
+	@param rightMotorPins - Collection with 2 pin numbers for right motor
+
+	@param rightMotorEncoder - Collection with 3 pin numbers for right motor encoder
+
+*/
 void BasicDrive::begin(Collection<int> leftMotorPins, Collection<int> leftEncoderPins, Collection<int> rightMotorPins, Collection<int> rightEncoderPins)
 {
 	int leftEncA = leftEncoderPins.get(0);
@@ -38,6 +48,17 @@ void BasicDrive::begin(Collection<int> leftMotorPins, Collection<int> leftEncode
 	this->motorController = controller;
 }
 
+/*
+	Creates a motor controller object and gives it two motors and assigns two encoders
+
+	@param leftMot - Motor object
+
+	@param rightMot - Motor object
+
+	@param leftEnc - Encoder object
+
+	@param rightEnc - Encoder object
+*/
 void BasicDrive::begin(Motor& leftMot, Motor& rightMot, Encoder& leftEnc, Encoder& rightEnc)
 {
 	MotorController controller;
@@ -50,6 +71,13 @@ void BasicDrive::begin(Motor& leftMot, Motor& rightMot, Encoder& leftEnc, Encode
 	this->rightEncoder = rightEnc;
 }
 
+/*
+	Makes the motors run
+
+	@param leftOut - float on [-1, 1] for left motor speed
+
+	@param rightOut - float on [-1, 1] for right motor speed
+*/
 void BasicDrive::setOutput(float leftOut, float rightOut)
 {
 	motorController.outputMotorA(leftOut);
@@ -57,16 +85,29 @@ void BasicDrive::setOutput(float leftOut, float rightOut)
 	motorController.outputMotorB(rightOut);
 }
 
+/*
+	Returns your left Encoder object
+
+	@return - Encoder object
+*/
 Encoder& BasicDrive::getLeftEncoder()
 {
 	return this->leftEncoder;
 }
 
+/*
+	Returns your right Encoder object
+
+	@return - Encoder
+*/
 Encoder& BasicDrive::getRightEncoder()
 {
 	return this->rightEncoder;
 }
 
+/*
+	Resets the tick count for both encoders.
+*/
 void BasicDrive::resetEncoders()
 {
 	leftEncoder.reset();

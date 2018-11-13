@@ -27,12 +27,14 @@ class PIDController
     private:
         float integrator;
         float err;
+        float prevErr;
         float last_process_var;
         float kP;
         float kI;
         float kD;
         float high;
 		float low;
+        float lastTime;
 
         float coerce(float val, float upper, float lower);
 };
