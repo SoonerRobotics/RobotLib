@@ -13,7 +13,7 @@ class Collection
 		void add(T t);
 		void set(int index, T t);
 		
-		T& get(int index);
+		T& get(int index); //difference between pointer and passing by reference?
 		
 		int getSize();
 		
@@ -24,12 +24,15 @@ class Collection
 		
 		unsigned int numItems;
 		
-		T* collection;
+		T* collection; //line 16
 		
 		void alloc(int newSize);
 
 };
 
+/*
+	Creates an empty Collection with size 10.
+*/
 template<class T>
 Collection<T>::Collection()
 {
@@ -38,6 +41,11 @@ Collection<T>::Collection()
 	collection = new T[size];
 }
 
+/*
+	Creates an empty Collection with specified size.
+
+	@param size - size of the Collection
+*/
 template<class T>
 Collection<T>::Collection(int size)
 {
@@ -46,6 +54,11 @@ Collection<T>::Collection(int size)
 	collection = new T[size];
 }
 
+/*
+	Equal sign copies another Collection
+
+	@param c - Collection to be copied
+*/
 template<class T>
 void Collection<T>::operator=(const Collection<T>& c)
 {
@@ -57,6 +70,11 @@ void Collection<T>::operator=(const Collection<T>& c)
 	}
 }
 
+/*
+	Adds t to the Collection.
+
+	@param t
+*/
 template<class T>
 void Collection<T>::add(T t)
 {
@@ -68,6 +86,13 @@ void Collection<T>::add(T t)
 	this->numItems++;
 }
 
+/*
+	Sets the value at index to t
+
+	@param t - new value of that index
+
+	@param index - index to be changed in collection
+*/
 template<class T>
 void Collection<T>::set(int index, T t)
 {
@@ -77,18 +102,36 @@ void Collection<T>::set(int index, T t)
 	}
 }
 
+/*
+	Returns value at index
+
+	@param index - int on interval [0,size)
+
+	@return value at index
+*/
 template<class T>
 T& Collection<T>::get(int index)
 {
 	return this->collection[index];
 }
 
+/*
+	Returns size of collection
+
+	@return size of collection
+*/
 template<class T>
 int Collection<T>::getSize()
 {
 	return numItems;
 }
 
+/*	
+	Changes the size of the Collection object (Does this assume that the new size is smaller?)
+	
+	@param newSize - 
+
+*/
 template<class T>
 void Collection<T>::alloc(int newSize)
 {
@@ -106,6 +149,9 @@ void Collection<T>::alloc(int newSize)
 	delete [] trash;
 }
 
+/*
+	Destructor (what are these for?)
+*/
 template<class T>
 Collection<T>::~Collection()
 {

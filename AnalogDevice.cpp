@@ -72,8 +72,6 @@ void AnalogDevice::write(int value)
 /*
 	Reads the value on the AnalogDevices analog pin.
 
-	@param value - value written to the analog pin.
-
 	@return value on the AnalogDevice's pin
 */
 int AnalogDevice::read()
