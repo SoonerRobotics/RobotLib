@@ -11,6 +11,10 @@ class Encoder
 		Encoder(int pinA, int pinB);
 		
 		Encoder(int pinA, int pinB, float K);
+
+		Encoder(int pin, direction w, float K);
+
+		Encoder(int pin, direction w);
 		
 		void operator=(const Encoder& encoder);
 		
@@ -36,7 +40,21 @@ class Encoder
 		int B;
 		
 		float K;
-		
+
+		enum mode{
+			QUADRATURE = 1,
+			HALL = 2,
+		};
+
+		mode s;
+
+		enum direction{
+			CW = 1,
+			CCW = 2,
+		};
+
+		direction d;
+
 };
 
 #endif
