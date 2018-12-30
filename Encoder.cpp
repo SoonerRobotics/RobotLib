@@ -15,7 +15,7 @@ Encoder::Encoder()
 	Sets up encoder with pin numbers.
 
 	@param pinA - pin for first sensor
-	
+
 	@param pinB - pin for second sensor
 
 */
@@ -217,7 +217,7 @@ void Encoder::setType(mode e)
 }
 
 /*
-	Sets direction for Hall encoder.
+	Sets direction for Hall effect sensor.
 
 	@param w - clockwise or counterclockwise
 */
