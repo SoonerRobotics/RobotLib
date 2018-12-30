@@ -27,6 +27,10 @@ class Encoder
 		void reset();
 		
 		void setPinA(int pinA);
+
+		void setType(mode e);
+
+		void setDirection(direction w);
 		
 		void setPinB(int pinB);
 		
@@ -46,7 +50,7 @@ class Encoder
 			HALL = 2,
 		};
 
-		mode s;
+		mode type;
 
 		enum direction{
 			CW = 1,

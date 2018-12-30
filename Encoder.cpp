@@ -21,7 +21,7 @@ Encoder::Encoder()
 */
 Encoder::Encoder(int pinA, int pinB)
 {
-	s = QUADRATURE
+	this->type = QUADRATURE
 
 	pinMode(pinA, INPUT);
 	pinMode(pinB, INPUT);
@@ -45,7 +45,7 @@ Encoder::Encoder(int pinA, int pinB)
 
 Encoder::Encoder(int pinA, int pinB, float K)
 {
-	s = QUADRATURE;
+	this->type = QUADRATURE;
 
 	pinMode(pinA, INPUT);
 	pinMode(pinB, INPUT);
@@ -68,7 +68,7 @@ Encoder::Encoder(int pinA, int pinB, float K)
 */
 Encoder::Encoder(int pin, direction w, float K)
 {
-	s = HALL;
+	this->type = HALL;
 
 
 	pinMode(pin, INPUT);
@@ -90,7 +90,7 @@ Encoder::Encoder(int pin, direction w, float K)
 */
 Encoder::Encoder(int pin, direction w)
 {
-	s = HALL;
+	this->type = HALL;
 
 	pinMode(pin, INPUT);
 	
@@ -103,7 +103,6 @@ Encoder::Encoder(int pin, direction w)
 
 /*
 	Equal sign copies over another Encoder object's variables
-	IF YOU MAKE NEW VARIABLES FOR THE HALL EFFECT SENSOR DO YOU HAVE TO INITIALIZE THEM FOR QUADRATURE ENCODERS
 
 	@param encoder - existing Encoder object to be copied
 */
@@ -117,7 +116,7 @@ void Encoder::operator=(const Encoder& encoder)
 	this->ticks = encoder.ticks;
 	this->K = encoder.K;
 
-	this->s = encoder.s;
+	this->type = encoder.type;
 	this->d = encoder.d;
 }
 
@@ -146,7 +145,7 @@ float Encoder::getValue()
 */
 void Encoder::process()
 {
-	if (s == HALL){
+	if (s == QUADRATURE){
 		if(digitalRead(this->A) == digitalRead(this->B))
   		{
     		++ticks;
@@ -213,7 +212,7 @@ void Encoder::setConstant(float K)
 */
 void Encoder::setType(mode e)
 {
-	this->s = e
+	this->typee = e
 }
 
 /*
