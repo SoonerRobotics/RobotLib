@@ -212,7 +212,7 @@ void Encoder::setConstant(float K)
 */
 void Encoder::setType(mode e)
 {
-	this->typee = e
+	this->type = e
 }
 
 /*
