@@ -2,9 +2,9 @@
 
 StepperMotor::StepperMotor()
 {
-	this->STEP = NULL;
-	this->DIR = NULL;
-	this->enable = NULL;
+	this->STEP = -1;
+	this->DIR = -1;
+	this->enable = -1;
 }
 
 void StepperMotor::operator=(const StepperMotor& motor)

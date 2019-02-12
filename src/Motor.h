@@ -16,9 +16,17 @@ class Motor
 		 */
 		Motor* begin(int in1pin, int in2pin);
 		/**
+		 * Initialize a 2 pin motor with reversability.
+		 */
+		Motor* begin(int in1pin, int in2pin, bool reverse);
+		/**
 		 * Initialize a 3 pin motor.
 		 */
 		Motor* begin(int in1pin, int in2pin, int enpin);
+		/**
+		 * Initialize a 3 pin motor with reversability.
+		 */
+		Motor* begin(int in1pin, int in2pin, int enpin, bool reverse);
 
 
 		/**

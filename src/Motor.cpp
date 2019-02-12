@@ -49,6 +49,40 @@ Motor* Motor::begin(int in1pin, int in2pin)
 }
 
 /*
+	Sets up the thing where you use two pins to tell the motor what to do.
+
+	@param in1pin - first analog output pin
+
+	@param in2pin - second analog output pin
+
+	@param reverse set true to reverse the turn direction
+*/
+Motor* Motor::begin(int in1pin, int in2pin, bool reverse)
+{
+	if (reverse) {
+		this->in1pin = in2pin;
+		this->in2pin = in1pin;
+		this->enpin = enpin;
+	} else {
+		this->in1pin = in1pin;
+		this->in2pin = in2pin;
+		this->enpin = enpin;	
+	}
+	
+	if(in1pin != -1)
+	{
+		pinMode(in1pin, OUTPUT);
+	}
+	
+	if(in2pin != -1)
+	{
+		pinMode(in2pin, OUTPUT);
+	}
+
+	return this;
+}
+
+/*
 	Sets up the thing where you use three pins to tell the motor what to do.
 
 	@param in1pin - first digital output pin
@@ -64,6 +98,49 @@ Motor* Motor::begin(int in1pin, int in2pin, int enpin)
 	this->in1pin = in1pin;
 	this->in2pin = in2pin;
 	this->enpin = enpin;
+	
+	if(in1pin != -1)
+	{
+		pinMode(in1pin, OUTPUT);
+	}
+	
+	if(in2pin != -1)
+	{
+		pinMode(in2pin, OUTPUT);
+	}
+	
+	if(enpin != -1)
+	{
+		pinMode(enpin, OUTPUT);
+	}
+
+	return this;
+}
+
+/*
+	Sets up the thing where you use three pins to tell the motor what to do.
+
+	@param in1pin - first digital output pin
+
+	@param in2pin - second digital output pin
+	
+	@param enpin - analog output pin
+
+	@param reverse set true to reverse the turn direction
+
+	@return pointer to Motor object that the function is called from
+*/
+Motor* Motor::begin(int in1pin, int in2pin, int enpin, bool reverse)
+{
+	if (reverse) {
+		this->in1pin = in2pin;
+		this->in2pin = in1pin;
+		this->enpin = enpin;
+	} else {
+		this->in1pin = in1pin;
+		this->in2pin = in2pin;
+		this->enpin = enpin;	
+	}
 	
 	if(in1pin != -1)
 	{
