@@ -3,8 +3,19 @@
 
 #include <Arduino.h>
 
+
 class Encoder
 {
+	enum direction{
+		CW = 1,
+		CCW = 2,
+	};
+
+	enum mode{
+		QUADRATURE = 1,
+		HALL = 2,
+	};
+
 	public:
 		Encoder();
 		
@@ -35,16 +46,6 @@ class Encoder
 		void setPinB(int pinB);
 		
 		void setConstant(float K);
-
-		enum direction{
-			CW = 1,
-			CCW = 2,
-		};
-
-		enum mode{
-			QUADRATURE = 1,
-			HALL = 2,
-		};
 	
 	private:
 		volatile long ticks;

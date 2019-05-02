@@ -21,7 +21,7 @@ Encoder::Encoder()
 */
 Encoder::Encoder(int pinA, int pinB)
 {
-	this->type = QUADRATURE
+	this->type = QUADRATURE;
 
 	pinMode(pinA, INPUT);
 	pinMode(pinB, INPUT);
@@ -145,7 +145,7 @@ float Encoder::getValue()
 */
 void Encoder::process()
 {
-	if (s == QUADRATURE){
+	if (type == QUADRATURE){
 		if(digitalRead(this->A) == digitalRead(this->B))
   		{
     		++ticks;
@@ -212,7 +212,7 @@ void Encoder::setConstant(float K)
 */
 void Encoder::setType(mode e)
 {
-	this->type = e
+	this->type = e;
 }
 
 /*
