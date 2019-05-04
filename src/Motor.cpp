@@ -186,7 +186,7 @@ void Motor::output(float speed)
 		return;
 	}
 
-	speed = clamp(speed, -1, 1);
+	speed = RLUtil::clamp(speed, -1, 1);
 
 	if (enpin != -1) {
 		if(speed > 0) {
@@ -253,7 +253,7 @@ void Motor::output2(float out)
 		return;
 	}
 
-	out = clamp(out, -1, 1);
+	out = RLUtil::clamp(out, -1, 1);
 	
 	if(out > 0) 
 	{
@@ -288,32 +288,4 @@ void Motor::disableOutput()
 void Motor::enableOutput()
 {
 	disabled = LOW;
-}
-	
-/**
- * Private Functions Below
- */
-
-/*
-	Returns val on interval [low, high]
-
-	@param val - float that gets changed
-
-	@param low - lower bound
-
-	@param high - higher bound
-
-	@return float between low and high (inclusive)
-*/
-float Motor::clamp(float val, float low, float high)
-{
-    if(val > high)
-    {
-        return high;
-    }
-    else if(val < low)
-    {
-        return low;
-    }
-    return val;
 }

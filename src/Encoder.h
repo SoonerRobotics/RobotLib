@@ -3,14 +3,29 @@
 
 #include <Arduino.h>
 
+
 class Encoder
 {
+	enum direction{
+		CW = 1,
+		CCW = 2,
+	};
+
+	enum mode{
+		QUADRATURE = 1,
+		HALL = 2,
+	};
+
 	public:
 		Encoder();
 		
 		Encoder(int pinA, int pinB);
 		
 		Encoder(int pinA, int pinB, float K);
+
+		Encoder(int pin, direction w, float K);
+
+		Encoder(int pin, direction w);
 		
 		void operator=(const Encoder& encoder);
 		
@@ -23,6 +38,10 @@ class Encoder
 		void reset();
 		
 		void setPinA(int pinA);
+
+		void setType(mode e);
+
+		void setDirection(direction w);
 		
 		void setPinB(int pinB);
 		
@@ -36,7 +55,11 @@ class Encoder
 		int B;
 		
 		float K;
-		
+
+		mode type;
+
+		direction d;
+
 };
 
 #endif

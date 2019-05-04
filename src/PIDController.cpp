@@ -91,28 +91,12 @@ float PIDController::getOutput(float setpoint, float process)
     float delta = (process - this->last_process_var)/dT ;
     float D = this->kD * delta;
 
-    float output = coerce(P + I + D, this->high, this->low);
+    float output = RLUtil::clamp(P + I + D, this->high, this->low);
 
     this->last_process_var = process;
     this->lastTime = millis();
 
     return output;
-}
-
-/*
-    constrains value to interval [upper, lower]
-*/
-float PIDController::coerce(float val, float upper, float lower)
-{
-    if(val > upper)
-    {
-        return upper;
-    }
-    else if(val < lower)
-    {
-        return lower;
-    }
-    return val;
 }
 
 void PIDController::setOutputRange(float upper, float lower)

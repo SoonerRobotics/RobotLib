@@ -15,11 +15,14 @@ Encoder::Encoder()
 	Sets up encoder with pin numbers.
 
 	@param pinA - pin for first sensor
+
 	@param pinB - pin for second sensor
 
 */
 Encoder::Encoder(int pinA, int pinB)
 {
+	this->type = QUADRATURE;
+
 	pinMode(pinA, INPUT);
 	pinMode(pinB, INPUT);
 	
@@ -27,6 +30,7 @@ Encoder::Encoder(int pinA, int pinB)
 	this->B = pinB;
 	this->K = 1;
 	this->ticks = 0;
+
 }
 
 /*
@@ -41,6 +45,8 @@ Encoder::Encoder(int pinA, int pinB)
 
 Encoder::Encoder(int pinA, int pinB, float K)
 {
+	this->type = QUADRATURE;
+
 	pinMode(pinA, INPUT);
 	pinMode(pinB, INPUT);
 	
@@ -48,6 +54,51 @@ Encoder::Encoder(int pinA, int pinB, float K)
 	this->B = pinB;
 	this->K = K;
 	this->ticks = 0;
+
+}
+
+/*
+	Sets up hall effect sensor.
+	
+	@param pin - pin number
+
+	@param w - direction (cw or ccw)
+
+	@param K - constant
+*/
+Encoder::Encoder(int pin, direction w, float K)
+{
+	this->type = HALL;
+
+
+	pinMode(pin, INPUT);
+	
+	this->A = pin;
+	this->K = K;
+	this->ticks = 0;
+
+	this->d = w;
+
+}
+
+/*
+	Sets up Hall effect sensor.
+
+	@param pin - pin number
+
+	@param w - enumerated type for direction of spin
+*/
+Encoder::Encoder(int pin, direction w)
+{
+	this->type = HALL;
+
+	pinMode(pin, INPUT);
+	
+	this->A = pin;
+	this->K = 1;
+	this->ticks = 0;
+
+	this->d = w;
 }
 
 /*
@@ -64,6 +115,9 @@ void Encoder::operator=(const Encoder& encoder)
 	this->B = encoder.B;
 	this->ticks = encoder.ticks;
 	this->K = encoder.K;
+
+	this->type = encoder.type;
+	this->d = encoder.d;
 }
 
 /*
@@ -87,17 +141,29 @@ float Encoder::getValue()
 }
 
 /*
-	not sure what this does because don't they end up balancing out?
+	Counts ticks for hall effect encoder or quadrature encoder. Should be called whenever voltage from A changes?
 */
 void Encoder::process()
 {
-	if(digitalRead(this->A) == digitalRead(this->B))
-  	{
-    	++ticks;
-  	}
-  	else
-  	{
-    	--ticks;
+	if (type == QUADRATURE){
+		if(digitalRead(this->A) == digitalRead(this->B))
+  		{
+    		++ticks;
+  		}
+  		else
+  		{
+    		--ticks;
+		}
+	}
+	else{
+		if (d == CW)
+		{
+			++ticks;
+		}
+		else
+		{
+			--ticks;
+		}
 	}
 }
 
@@ -137,4 +203,24 @@ void Encoder::setPinB(int pinB)
 void Encoder::setConstant(float K)
 {
 	this->K = K;
+}
+
+/*
+	Sets encoder type.
+
+	@param e - type of encoder 
+*/
+void Encoder::setType(mode e)
+{
+	this->type = e;
+}
+
+/*
+	Sets direction for Hall effect sensor.
+
+	@param w - clockwise or counterclockwise
+*/
+void Encoder::setDirection(direction w)
+{
+	this->d = w;
 }

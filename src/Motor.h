@@ -2,6 +2,7 @@
 #define MOTOR_H
 
 #include <Arduino.h>
+#include "RobotLibUtil.h"
 
 class Motor
 {
@@ -67,8 +68,6 @@ class Motor
 		int defaultOnZero = HIGH;
 
 		bool disabled = LOW;
-		
-		float clamp(float val, float low, float high);
 };
 
 #endif

@@ -2,7 +2,7 @@
 #define PIDCONTROLLER_H
 
 #include <Arduino.h>
-#include "Collection.h"
+#include "RobotLibUtil.h"
 
 class PIDController
 {
@@ -35,8 +35,6 @@ class PIDController
         float high;
 		float low;
         float lastTime;
-
-        float coerce(float val, float upper, float lower);
 };
 
 #endif // PIDCONTROLLER_H
