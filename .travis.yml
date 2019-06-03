@@ -1,0 +1,9 @@
+language: cpp
+compiler:
+  - gcc
+#Possible implementation of code coverage using coveralls
+#before_install:
+#  - pip install --user cpp-coveralls
+script: ./travis.sh
+#after_success:
+#  - coveralls --exclude arduino --exclude build --exclude catchlib --gcov-options '\-lp'
