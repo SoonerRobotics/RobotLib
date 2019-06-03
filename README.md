@@ -1,4 +1,4 @@
-# Robot Lib
+# Robot Lib [![Build Status](https://travis-ci.com/Sooner-Competitive-Robotics/RobotLib.svg?branch=master)](https://travis-ci.com/Sooner-Competitive-Robotics/RobotLib)
 
 ## Features
 
