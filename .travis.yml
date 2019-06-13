@@ -1,9 +1,9 @@
 language: cpp
 compiler:
   - gcc
-#Possible implementation of code coverage using coveralls
-#before_install:
-#  - pip install --user cpp-coveralls
+addons:
+  apt:
+    packages: lcov
 script: ./travis.sh
-#after_success:
-#  - coveralls --exclude arduino --exclude build --exclude catchlib --gcov-options '\-lp'
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -f build/total.info || echo "Codecov did not collect coverage reports"
