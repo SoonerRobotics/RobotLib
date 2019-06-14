@@ -1,0 +1,10 @@
+AnalogDevice	KEYWORD1
+DigitalDevice	KEYWORD1
+Encoder	KEYWORD1
+Motor	KEYWORD1
+PIDController	KEYWORD1
+RobotLibUtil	KEYWORD1
+StepperMotor	KEYWORD1
+output	KEYWORD2
+begin	KEYWORD2
+reverse	KEYWORD2
