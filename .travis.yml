@@ -6,6 +6,6 @@ addons:
     packages: lcov
 script: 
   - ./build.sh
-  - ctest --output-on-failure build/
+  - make test -C build
 after_success:
   - bash <(curl -s https://codecov.io/bash) -f build/total.info || echo "Codecov did not collect coverage reports"
