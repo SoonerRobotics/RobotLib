@@ -169,11 +169,11 @@ void Motor::outputBool(int value) {
 	}
 
 	if (enpin == -1) {
-		analogWrite(this->in1pin, value);
-		analogWrite(this->in2pin, value);
+		analogWrite(this->in1pin, value * 255);
+		analogWrite(this->in2pin, value * 255);
 	} else {
-		digitalWrite(this->in1pin, value * 255);
-		digitalWrite(this->in2pin, value * 255);
+		digitalWrite(this->in1pin, value);
+		digitalWrite(this->in2pin, value);
 		analogWrite(this->enpin, 0);
 	}
 }
@@ -183,8 +183,8 @@ void Motor::disableOutput()
 	disabled = HIGH;
 
 	if (this->enpin == -1) {
-		analogWrite(this->in1pin, defaultOnZero);
-		analogWrite(this->in2pin, defaultOnZero);
+		analogWrite(this->in1pin, defaultOnZero * 255);
+		analogWrite(this->in2pin, defaultOnZero * 255);
 	} else {
 		digitalWrite(this->in1pin, defaultOnZero);
 		digitalWrite(this->in2pin, defaultOnZero);
