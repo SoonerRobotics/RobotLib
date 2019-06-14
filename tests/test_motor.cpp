@@ -147,14 +147,14 @@ TEST_CASE("2 pin disable and reenable test") {
 
     motor.disableOutput();
     motor.output(-0.5);
-    REQUIRE(getValueAtPin(2) == 1);
-    REQUIRE(getValueAtPin(3) == 1);
+    REQUIRE(getValueAtPin(2) == 255);
+    REQUIRE(getValueAtPin(3) == 255);
     motor.output(0);
-    REQUIRE(getValueAtPin(2) == 1);
-    REQUIRE(getValueAtPin(3) == 1);
+    REQUIRE(getValueAtPin(2) == 255);
+    REQUIRE(getValueAtPin(3) == 255);
     motor.outputBool(LOW);
-    REQUIRE(getValueAtPin(2) == 1);
-    REQUIRE(getValueAtPin(3) == 1);
+    REQUIRE(getValueAtPin(2) == 255);
+    REQUIRE(getValueAtPin(3) == 255);
 
     motor.enableOutput();
     motor.output(-0.5);
@@ -206,8 +206,8 @@ TEST_CASE("output bool test") {
     motor.begin(2, 3);
 
     motor.outputBool(HIGH);
-    REQUIRE(getValueAtPin(2) == 1);
-    REQUIRE(getValueAtPin(3) == 1);
+    REQUIRE(getValueAtPin(2) == 255);
+    REQUIRE(getValueAtPin(3) == 255);
 
     motor.outputBool(LOW);
     REQUIRE(getValueAtPin(2) == 0);
@@ -217,8 +217,8 @@ TEST_CASE("output bool test") {
     motor2.begin(4,5,6);
 
     motor2.outputBool(HIGH);
-    REQUIRE(getValueAtPin(4) == 255);
-    REQUIRE(getValueAtPin(5) == 255);
+    REQUIRE(getValueAtPin(4) == 1);
+    REQUIRE(getValueAtPin(5) == 1);
     REQUIRE(getValueAtPin(6) == 0);
 
     motor2.outputBool(LOW);
