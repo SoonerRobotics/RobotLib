@@ -1,4 +1,5 @@
 #make build dir
+rm -r build #for local development
 mkdir build
 cd build
 

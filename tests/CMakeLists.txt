@@ -1,9 +1,11 @@
-add_executable(tests 
-    util_tests.cpp
+file(GLOB SOURCES
+    *.cpp
+    ../src/*.cpp
 )
 
-include_directories (${CMAKE_CURRENT_SOURCE_DIR}/src
-                     )
+add_executable(tests ${SOURCES})
+
+include_directories (${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 target_link_libraries(tests catch)
 target_link_libraries(tests RobotLib)
