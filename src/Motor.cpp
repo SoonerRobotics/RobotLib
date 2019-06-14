@@ -15,11 +15,12 @@ Motor::Motor()
 
 	@param motor - existing Motor object whose stuff gets copied over
 */
-void Motor::operator=(const Motor& motor)
+Motor& Motor::operator=(const Motor& motor)
 {
 	this->in1pin = motor.in1pin;
 	this->in2pin = motor.in2pin;
 	this->enpin = motor.enpin;
+    return *this;
 }
 
 /*
@@ -29,11 +30,11 @@ void Motor::operator=(const Motor& motor)
 
 	@param in2pin - second analog output pin
 */
-Motor* Motor::begin(int in1pin, int in2pin)
+Motor& Motor::begin(int in1pin, int in2pin)
 {
 	this->in1pin = in1pin;
 	this->in2pin = in2pin;
-	this->enpin = enpin;
+	this->enpin = -1;
 	
 	if(in1pin != -1)
 	{
@@ -45,41 +46,7 @@ Motor* Motor::begin(int in1pin, int in2pin)
 		pinMode(in2pin, OUTPUT);
 	}
 
-	return this;
-}
-
-/*
-	Sets up the thing where you use two pins to tell the motor what to do.
-
-	@param in1pin - first analog output pin
-
-	@param in2pin - second analog output pin
-
-	@param reverse set true to reverse the turn direction
-*/
-Motor* Motor::begin(int in1pin, int in2pin, bool reverse)
-{
-	if (reverse) {
-		this->in1pin = in2pin;
-		this->in2pin = in1pin;
-		this->enpin = enpin;
-	} else {
-		this->in1pin = in1pin;
-		this->in2pin = in2pin;
-		this->enpin = enpin;	
-	}
-	
-	if(in1pin != -1)
-	{
-		pinMode(in1pin, OUTPUT);
-	}
-	
-	if(in2pin != -1)
-	{
-		pinMode(in2pin, OUTPUT);
-	}
-
-	return this;
+	return *this;
 }
 
 /*
@@ -93,7 +60,7 @@ Motor* Motor::begin(int in1pin, int in2pin, bool reverse)
 
 	@return pointer to Motor object that the function is called from
 */
-Motor* Motor::begin(int in1pin, int in2pin, int enpin)
+Motor& Motor::begin(int in1pin, int in2pin, int enpin)
 {
 	this->in1pin = in1pin;
 	this->in2pin = in2pin;
@@ -114,64 +81,33 @@ Motor* Motor::begin(int in1pin, int in2pin, int enpin)
 		pinMode(enpin, OUTPUT);
 	}
 
-	return this;
+	return *this;
+}
+/*
+    Reverses the direction of a motor by swapping it's pins
+
+    @return pointer to Motor object
+ */
+Motor& Motor::reverse() {
+    int temp = this->in1pin;
+    this->in1pin = this->in2pin;
+    this->in2pin = temp;
+
+    return *this;
 }
 
 /*
-	Sets up the thing where you use three pins to tell the motor what to do.
+	Sets defaultOnZero to value
 
-	@param in1pin - first digital output pin
-
-	@param in2pin - second digital output pin
-	
-	@param enpin - analog output pin
-
-	@param reverse set true to reverse the turn direction
-
-	@return pointer to Motor object that the function is called from
-*/
-Motor* Motor::begin(int in1pin, int in2pin, int enpin, bool reverse)
-{
-	if (reverse) {
-		this->in1pin = in2pin;
-		this->in2pin = in1pin;
-		this->enpin = enpin;
-	} else {
-		this->in1pin = in1pin;
-		this->in2pin = in2pin;
-		this->enpin = enpin;	
-	}
-	
-	if(in1pin != -1)
-	{
-		pinMode(in1pin, OUTPUT);
-	}
-	
-	if(in2pin != -1)
-	{
-		pinMode(in2pin, OUTPUT);
-	}
-	
-	if(enpin != -1)
-	{
-		pinMode(enpin, OUTPUT);
-	}
-
-	return this;
-}
-
-/*
-	Sets defaultOnZero to high
-
-	@param high - 0 or 1
+	@param value - 0 or 1
 	
 	@return pointer to Motor object
 */
-Motor* Motor::setDefaultOnZero(int high) {
- 	if (high <= 1 && high >= 0) {
-		this->defaultOnZero = high;
+Motor& Motor::setDefaultOnZero(int value) {
+ 	if (value >= 0 && value <= 1) {
+		this->defaultOnZero = value;
 	}
-	return this;
+	return *this;
 }
 
 /*
@@ -207,7 +143,7 @@ void Motor::output(float speed)
 	} else {
 		if(speed > 0) 
 		{
-			analogWrite(this->in1pin, (int)(abs(speed) * 255) );
+			analogWrite(this->in1pin, (int)(speed * 255) );
 			analogWrite(this->in2pin, 0);
 		}
 		else if (speed < 0) 
@@ -216,8 +152,8 @@ void Motor::output(float speed)
 			analogWrite(this->in2pin, (int)(abs(speed) * 255) );
 		}
 		else if (speed == 0) {
-			analogWrite(this->in1pin, defaultOnZero);
-			analogWrite(this->in2pin, defaultOnZero);
+			analogWrite(this->in1pin, defaultOnZero * 255);
+			analogWrite(this->in2pin, defaultOnZero * 255);
 		}
 	}
 }
@@ -225,49 +161,20 @@ void Motor::output(float speed)
 /*
 	Makes the motor stop or coast.
 
-	@param high - value from 0 to 255
+	@param value - value LOW or HIGH
 */
-void Motor::outputBool(int high) {
+void Motor::outputBool(int value) {
 	if(disabled){
 		return;
 	}
 
 	if (enpin == -1) {
-		analogWrite(this->in1pin, high);
-		analogWrite(this->in2pin, high);
+		analogWrite(this->in1pin, value);
+		analogWrite(this->in2pin, value);
 	} else {
-		digitalWrite(this->in1pin, high);
-		digitalWrite(this->in2pin, high);
+		digitalWrite(this->in1pin, value * 255);
+		digitalWrite(this->in2pin, value * 255);
 		analogWrite(this->enpin, 0);
-	}
-}
-
-/*
-	Outputs values to motor controller if you use 2 pins
-
-	@param out - speed of the motor as a decimal from -1 to 1
-*/ 
-void Motor::output2(float out)
-{
-	if(disabled){
-		return;
-	}
-
-	out = RLUtil::clamp(out, -1, 1);
-	
-	if(out > 0) 
-	{
-		analogWrite(this->in1pin, (int)(abs(out) * 255) );
-		analogWrite(this->in2pin, 0);
-	}
-	else if (out < 0) 
-	{
-		analogWrite(this->in1pin, 0);
-		analogWrite(this->in2pin, (int)(abs(out) * 255) );
-	}
-	else if (out == 0) {
-		analogWrite(this->in1pin, 0);
-		analogWrite(this->in2pin, 0);
 	}
 }
 
@@ -275,7 +182,7 @@ void Motor::disableOutput()
 {
 	disabled = HIGH;
 
-	if (enpin == -1) {
+	if (this->enpin == -1) {
 		analogWrite(this->in1pin, defaultOnZero);
 		analogWrite(this->in2pin, defaultOnZero);
 	} else {
@@ -288,4 +195,13 @@ void Motor::disableOutput()
 void Motor::enableOutput()
 {
 	disabled = LOW;
+}
+
+int Motor::getNumPins()
+{
+	if (this->enpin == -1) {
+		return 2;
+	} else {
+		return 3;
+	}
 }

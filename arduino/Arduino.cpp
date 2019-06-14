@@ -62,3 +62,10 @@ int getModeAtPin(int pin) {
 	}
 	return GlobalValues::global_pin_modes[pin];
 }
+
+void arduinoClearPins() {
+ 	for (int i=0; i<17; i++) {
+		 GlobalValues::global_pin_modes[i] = -1;
+		 GlobalValues::global_pin_values[i] = 0;
+	 }
+}

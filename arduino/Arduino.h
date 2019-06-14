@@ -36,5 +36,6 @@ void delayMicroseconds(unsigned long duration);
 int getValueAtPin(int pin);
 void setValueAtPin(int pin, int value);
 int getModeAtPin(int pin);
+void arduinoClearPins();
 
 #endif
