@@ -3,62 +3,16 @@
 
 #include <Arduino.h>
 
-
 class Encoder
 {
-	enum direction{
-		CW = 1,
-		CCW = 2,
-	};
-
-	enum mode{
-		QUADRATURE = 1,
-		HALL = 2,
-	};
-
 	public:
-		Encoder();
-		
-		Encoder(int pinA, int pinB);
-		
-		Encoder(int pinA, int pinB, float K);
 
-		Encoder(int pin, direction w, float K);
-
-		Encoder(int pin, direction w);
-		
-		void operator=(const Encoder& encoder);
-		
-		void process();
+		virtual void process() = 0;
+		virtual void reset() = 0;
 	
-		long getTicks();
+		virtual long getTicks() = 0;
+		virtual float getValue() = 0;
 		
-		float getValue();
-		
-		void reset();
-		
-		void setPinA(int pinA);
-
-		void setType(mode e);
-
-		void setDirection(direction w);
-		
-		void setPinB(int pinB);
-		
-		void setConstant(float K);
-	
-	private:
-		volatile long ticks;
-		
-		int A;
-		
-		int B;
-		
-		float K;
-
-		mode type;
-
-		direction d;
 
 };
 
