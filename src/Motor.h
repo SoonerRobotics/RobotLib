@@ -10,30 +10,27 @@ class Motor
 	public:
 		Motor();
 		
-		void operator=(const Motor& motor);
+		Motor& operator=(const Motor& motor);
 		
 		/**
 		 * Initialize a 2 pin motor.
 		 */
-		Motor* begin(int in1pin, int in2pin);
-		/**
-		 * Initialize a 2 pin motor with reversability.
-		 */
-		Motor* begin(int in1pin, int in2pin, bool reverse);
+		Motor& begin(int in1pin, int in2pin);
+
 		/**
 		 * Initialize a 3 pin motor.
 		 */
-		Motor* begin(int in1pin, int in2pin, int enpin);
-		/**
-		 * Initialize a 3 pin motor with reversability.
-		 */
-		Motor* begin(int in1pin, int in2pin, int enpin, bool reverse);
+		Motor& begin(int in1pin, int in2pin, int enpin);
 
+		/**
+		 * Reverses the direction of a motor
+		 */
+		Motor& reverse();
 
 		/**
 		 * Set the default signal to send to in1pin and in2pin on 0 speed.
 		 */
-		Motor* setDefaultOnZero(int high);
+		Motor& setDefaultOnZero(int high);
 
 		/**
 		 * Output a speed to the motor, between -1 and 1.
@@ -47,9 +44,6 @@ class Motor
 		 */
 		void outputBool(int high);
 
-		//For backwards compatibility
-		void output2(float out);
-
 		/**
 		 * Disables motor output immediately.
 		 */
@@ -59,6 +53,11 @@ class Motor
 		 * Enables motor output after it has been disabled.
 		 */
 		void enableOutput();
+
+		/**
+		 * Gets the number of pins the motor runs on (2 vs 3)
+		 */
+		int getNumPins();
 		
 	private:
 		int in1pin;

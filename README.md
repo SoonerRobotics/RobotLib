@@ -1,4 +1,4 @@
-# Robot Lib [![Build Status](https://travis-ci.com/Sooner-Competitive-Robotics/RobotLib.svg?branch=master)](https://travis-ci.com/Sooner-Competitive-Robotics/RobotLib)
+# Robot Lib [![GitHub release](https://img.shields.io/github/release/Sooner-Competitive-Robotics/RobotLib.svg)](https://github.com/Sooner-Competitive-Robotics/RobotLib/releases) [![Build Status](https://travis-ci.com/Sooner-Competitive-Robotics/RobotLib.svg?branch=master)](https://travis-ci.com/Sooner-Competitive-Robotics/RobotLib) [![codecov](https://img.shields.io/codecov/c/github/Sooner-Competitive-Robotics/RobotLib.svg)](https://codecov.io/gh/Sooner-Competitive-Robotics/RobotLib)
 
 ## Features
 
