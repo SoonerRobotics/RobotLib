@@ -1,5 +1,6 @@
 #include "Arduino.h"
 
+unsigned long GlobalValues::global_time = 0;
 int GlobalValues::global_pin_modes[17] = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
 int GlobalValues::global_pin_values[17] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
@@ -24,16 +25,19 @@ float analogRead(int pin) {
 }
 
 unsigned long millis() {
-	return 0;
+	return GlobalValues::global_time / 1000;
+}
+
+unsigned long micros() {
+	return GlobalValues::global_time;
 }
 
 void delay(unsigned long duration) {
-	(void)duration; //removes 'unused parameter' warning
-	return;
+	GlobalValues::global_time += duration * 1000;
 }
 
 void delayMicroseconds(unsigned long duration) {
-	(void)duration; //removes 'unused parameter' warning
+	GlobalValues::global_time += duration;
 }
 
 // float abs(float val) {
@@ -68,4 +72,20 @@ void arduinoClearPins() {
 		 GlobalValues::global_pin_modes[i] = -1;
 		 GlobalValues::global_pin_values[i] = 0;
 	 }
+}
+
+void setArduinoTimeMicros(unsigned long time) {
+	GlobalValues::global_time = time;
+}
+
+void addArduinoTimeMicros(unsigned long time) {
+	GlobalValues::global_time += time;
+}
+
+void setArduinoTimeMillis(unsigned long time) {
+	GlobalValues::global_time = time * 1000;
+}
+
+void addArduinoTimeMillis(unsigned long time) {
+	GlobalValues::global_time += time * 1000;
 }

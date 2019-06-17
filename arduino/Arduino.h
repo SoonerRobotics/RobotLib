@@ -16,6 +16,7 @@ using namespace std;
 
 class GlobalValues{
     public:
+        static unsigned long global_time; //This is in Microseconds
         static int global_pin_modes[17];
         static int global_pin_values[17];
 };
@@ -27,6 +28,7 @@ int digitalRead(int pin);
 void analogWrite(int pin, int value);
 float analogRead(int pin);
 unsigned long millis();
+unsigned long micros();
 void delay(unsigned long duration);
 void delayMicroseconds(unsigned long duration);
 //float abs(float val);
@@ -37,5 +39,9 @@ int getValueAtPin(int pin);
 void setValueAtPin(int pin, int value);
 int getModeAtPin(int pin);
 void arduinoClearPins();
+void setArduinoTimeMicros(unsigned long time);
+void addArduinoTimeMicros(unsigned long time);
+void setArduinoTimeMillis(unsigned long time);
+void addArduinoTimeMillis(unsigned long time);
 
 #endif
