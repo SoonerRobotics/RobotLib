@@ -6,8 +6,6 @@
  * with one include statement.
  */
 
-#include "AnalogDevice.h"
-#include "DigitalDevice.h"
 #include "Encoder.h"
 #include "Motor.h"
 #include "PIDController.h"
