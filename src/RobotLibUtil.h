@@ -1,8 +1,6 @@
 #ifndef ROBOTLIBUTIL_H
 #define ROBOTLIBUTIL_H
 
-#include <cmath>
-
 class RLUtil {
 public:
     /*
