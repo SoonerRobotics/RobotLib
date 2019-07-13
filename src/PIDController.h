@@ -8,15 +8,15 @@ class PIDController
 {
     public:
 
-		PIDController();
+	PIDController();
 		
         PIDController(float process_init, float kp, float ki, float kd);
 		
-		void operator=(const PIDController& pidController);
+	void operator=(const PIDController& pidController);
 		
         float getOutput(float setpoint, float process);
 		
-		float getOutput2(float setpoint, float process);
+	float getOutput2(float setpoint, float process);
 		
         void setOutputRange(float upper, float lower);
 		
@@ -33,7 +33,7 @@ class PIDController
         float kI;
         float kD;
         float high;
-		float low;
+	float low;
         float lastTime;
 };
 
