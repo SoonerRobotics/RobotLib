@@ -164,3 +164,15 @@ TEST_CASE("Set Output Range Test")
     // Output range should be limited
     REQUIRE(pid.update(4, 1) == Approx(0.25));
 }
+
+
+TEST_CASE("High Frequency Loop Test")
+{
+    PIDController pid(0, 0.1, 0, 0);
+
+    // Set dt = 1 usec to add more cumulative error
+    addArduinoTimeMicros(1);
+
+    // Output range should be a real value despite the short update time
+    REQUIRE(pid.update(4, 1) == Approx(0.3));
+}
