@@ -1,106 +1,255 @@
 #include "PIDController.h"
 
-/*
-    
-*/
+
+/********************************************/
+//          CONSTRUCTORS
+/********************************************/
+
+/**
+ * @brief Construct a new PIDController object
+ * 
+ */
 PIDController::PIDController()
 {
-    this->last_process_var = 0;
-    this->err = 0;
-    this->integrator = 0;
-    this->prevErr = 0;
+    // PID values
+    this->integrator = 0.0;
+    this->error = 0.0;
 
-    this->kP = 0;
-    this->kI = 0;
-    this->kD = 0;
+    // States
+    this->prev_error = 0.0;
+    this->last_state = 0.0;
 
-    this->low = -1;
-    this->high = 1;	
-}
+    // Equation constants
+    this->kP = 0.0;
+    this->kI = 0.0;
+    this->kD = 0.0;
 
-/*
-    
-*/
-PIDController::PIDController(float process_init, float kp, float ki, float kd)
-{
-    this->last_process_var = process_init;
-    this->err = 0;
-    this->prevErr = 0;
-    this->integrator = 0;
+    // Boundary control
+    this->high = 1.0;
+	this->low = -1.0;
+    this->is_bounded = true;
 
-    this->kP = kp;
-    this->kI = ki;
-    this->kD = kd;
-
-    this->low = -1;
-    this->high = 1;
-}
-
-/*
-    Copies over another PIDController
-
-    @param pidController - PIDController object that gets copied
-*/
-void PIDController::operator=(const PIDController& pidController)
-{
-    this->last_process_var = pidController.last_process_var;
-    this->kP = pidController.kP;
-    this->kI = pidController.kI;
-    this->kD = pidController.kD;
-    this->err = pidController.err;
-    this->prevErr = pidController.prevErr;
-    this->integrator = pidController.integrator;
-    this->low = pidController.low;
-    this->high = pidController.high;
-}
-
-void PIDController::initialize(float process_init, float kp, float ki, float kd)
-{
-    this->last_process_var = process_init;
-	
-    this->kP = kp;
-    this->kI = ki;
-    this->kD = kd;
-
-    this->err = 0;
-    this->integrator = 0;
-	
-    lastTime = millis();
+    // Timing
+    this->last_time = millis();
+    this->dt = 0.0;
 }
 
 
 /**
- * @brief Gets the output from the PID
+ * @brief Construct a new PIDController object
  * 
- * @param setpoint - The target value
- * @param cur_var - The current value
- * @return double - The output (p + i + d)
+ * @param init_state starting state of the system
+ * @param kp proportional coefficient
+ * @param ki integral coefficient
+ * @param kd derivative coefficient
  */
-float PIDController::getOutput(float setpoint, float process)
+PIDController::PIDController(float init_state, float kp, float ki, float kd)
 {
-    this->err = setpoint - process;
-    float P = kP * err;
+    // PID values
+    this->integrator = 0.0;
+    this->error = 0.0;
 
-    float dT = lastTime - millis();
+    // States
+    this->prev_error = 0.0;
+    this->last_state = init_state;
 
-    this->prevErr = setpoint - last_process_var;
-    this->integrator += 0.5 * (err + prevErr) * dT;
+    // Equation constants
+    this->kP = kp;
+    this->kI = ki;
+    this->kD = kd;
 
-    float I = this->kI * this->integrator;
+    // Boundary control
+    this->high = 1.0;
+	this->low = -1.0;
+    this->is_bounded = true;
 
-    float delta = (process - this->last_process_var)/dT ;
-    float D = this->kD * delta;
-
-    float output = RLUtil::clamp(P + I + D, this->high, this->low);
-
-    this->last_process_var = process;
-    this->lastTime = millis();
-
-    return output;
+    // Timing
+    this->last_time = millis();
+    this->dt = 0.0;
 }
 
-void PIDController::setOutputRange(float upper, float lower)
+
+/**
+ * @brief Copy and assign a PIDController into another one
+ * 
+ * @param pid a PID controller to copy and assign
+ */
+void PIDController::operator=(const PIDController& pid)
 {
-    this->high = upper;
+    // PID values
+    this->integrator = pid.integrator;
+    this->error = pid.error;
+
+    // States
+    this->prev_error = pid.prev_error;
+    this->last_state = pid.last_state;
+
+    // Equation constants
+    this->kP = pid.kP;
+    this->kI = pid.kI;
+    this->kD = pid.kD;
+
+    // Boundary control
+    this->high = pid.high;
+	this->low = pid.low;
+    this->is_bounded = pid.is_bounded;
+
+    // Timing
+    this->last_time = pid.last_time;
+    this->dt = pid.dt;
+}
+
+
+/********************************************/
+//          SETTERS
+/********************************************/
+
+/**
+ * @brief Initializes the PID controller
+ * 
+ * @param init_state starting state of the system
+ */
+void PIDController::begin(float init_state)
+{
+    // PID values
+    this->integrator = 0.0;
+    this->error = 0.0;
+
+    // States
+    this->prev_error = 0.0;
+    this->last_state = init_state;
+
+    // Timing
+    this->last_time = millis();
+    this->dt = 0.0;
+}
+
+
+/**
+ * @brief Initializes a PIDController
+ * 
+ * @param init_state starting state of the system
+ * @param kp proportional coefficient
+ * @param ki integral coefficient
+ * @param kd derivative coefficient
+ */
+void PIDController::begin(float init_state, float kp, float ki, float kd)
+{
+    // PID values
+    this->integrator = 0.0;
+    this->error = 0.0;
+
+    // States
+    this->prev_error = 0.0;
+    this->last_state = init_state;
+
+    // Equation constants
+    this->kP = kp;
+    this->kI = ki;
+    this->kD = kd;
+
+    // Timing
+    this->last_time = millis();
+    this->dt = 0.0;
+}
+
+
+/**
+ * @brief Resets the PID controller's state.
+ * Note: you must reinitialize the PID with begin() before running it again.
+ * 
+ */
+void PIDController::reset()
+{
+    // PID values
+    this->integrator = 0.0;
+    this->error = 0.0;
+
+    // States
+    this->prev_error = 0.0;
+    this->last_state = 0.0;
+}
+
+
+/**
+ * @brief Sets if the output/result is bounded by a clamp
+ * 
+ * @param is_bounded 
+ */
+void PIDController::set_bounded(bool is_bounded)
+{
+    this->is_bounded = is_bounded;
+}
+
+
+/**
+ * @brief Sets the clamping boundaries on the output/result
+ * 
+ * @param lower Lowest allowable output/result
+ * @param upper Highest allowable output/result
+ */
+void PIDController::set_output_range(float lower, float upper)
+{
     this->low = lower;
+    this->high = upper;
+}
+
+
+/********************************************/
+//          GETTERS
+/********************************************/
+
+/**
+ * @brief Updates the PID equation and returns the result
+ * 
+ * @param target_state the goal state of the system
+ * @param cur_state the current state of the system
+ * @return float the output/result/control signal needed to optimize the state
+ */
+float PIDController::update(float target_state, float cur_state)
+{
+    // Declare local variables
+    float P, I, D;
+    float result;
+    float slope;
+
+    // Get the time step
+    this->dt = (millis() - this->last_time) / 1000.0;
+
+    // Calculate error
+    this->error = target_state - cur_state;
+
+    // Integrate error using trapezoidal Riemann sums
+    this->prev_error = target_state - this->last_state;
+    this->integrator += 0.5 * (this->error + this->prev_error) * this->dt;
+
+    // Find the slope of the error curve using secant approximation
+    slope = (cur_state - this->last_state) / this->dt;
+
+    // Apply PID gains
+    P = this->kP * error;
+    I = this->kI * this->integrator;
+    D = this->kD * slope;
+
+    // Sum P, I, D to get the result of the equation
+    // Bind the output if needed
+    result = this->is_bounded ? RLUtil::clamp(P + I + D, this->low, this->high) : (P + I + D);
+
+    // Update timing and increment to the next state
+    this->last_state = cur_state;
+    this->last_time = millis();
+
+    // Return the PID result
+    return result;
+}
+
+
+/**
+ * @brief Gets the integral part of the PID controller
+ * 
+ * @return float the integral component of the PID
+ */
+float PIDController::get_integrator_value()
+{
+    return this->kI * this->integrator;
 }
