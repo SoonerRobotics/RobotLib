@@ -28,10 +28,11 @@ class HallEffectEncoder : public Encoder
 		float getValue();
 
     private:
+        // Position
         long ticks;
-        float distance;
         float K;
 
+        // Configuration
         int pin;
         int direction;
 };

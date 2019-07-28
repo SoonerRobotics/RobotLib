@@ -7,9 +7,13 @@
  */
 HallEffectEncoder::HallEffectEncoder()
 {
-    this->pin = -1;
-    this->K = 1;
+    // Position
     this->ticks = 0;
+    this->K = 1;
+
+    // Configuration
+    this->pin = -1;
+    this->direction = 0;
 }
 
 
@@ -22,9 +26,15 @@ HallEffectEncoder::HallEffectEncoder()
  */
 HallEffectEncoder::HallEffectEncoder(int pin, int direction, float K)
 {
+	pinMode(pin, INPUT);
+	
+	// Position
+    this->ticks = 0;
+    this->K = K;
+
+    // Configuration
     this->pin = pin;
     this->direction = direction;
-	this->K = K;
 }
 
 
@@ -37,11 +47,13 @@ void HallEffectEncoder::operator=(const HallEffectEncoder& hall_encoder)
 {
 	pinMode(hall_encoder.pin, INPUT);
 
+	// Position
+	this->ticks = hall_encoder.ticks;
+	this->K = hall_encoder.K;
+
+	// Configuration
 	this->pin = hall_encoder.pin;
 	this->direction = hall_encoder.direction;
-	this->ticks = hall_encoder.ticks;
-	this->distance = hall_encoder.distance;
-	this->K = hall_encoder.K;
 }
 
 
@@ -54,9 +66,15 @@ void HallEffectEncoder::operator=(const HallEffectEncoder& hall_encoder)
  */
 void HallEffectEncoder::begin(int pin, int direction, float K)
 {
-	this->pin = pin;
+	pinMode(pin, INPUT);
+
+	// Position
+    this->ticks = 0;
+    this->K = K;
+
+    // Configuration
+    this->pin = pin;
     this->direction = direction;
-	this->K = K;
 }
 
 
