@@ -5,14 +5,14 @@
 
 class Encoder
 {
-	public:
+    public:
 
-		virtual void process() = 0;
-		virtual void reset() = 0;
-	
-		virtual long getTicks() = 0;
-		virtual float getValue() = 0;
-		
+        virtual void process() = 0;
+        virtual void reset() = 0;
+    
+        virtual long getTicks() = 0;
+        virtual float getValue() = 0;
+        
 
 };
 
