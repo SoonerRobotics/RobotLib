@@ -26,7 +26,7 @@ PIDController::PIDController()
 
     // Boundary control
     this->high = 1.0;
-	this->low = -1.0;
+    this->low = -1.0;
     this->is_bounded = true;
 
     // Timing
@@ -60,7 +60,7 @@ PIDController::PIDController(float init_state, float kp, float ki, float kd)
 
     // Boundary control
     this->high = 1.0;
-	this->low = -1.0;
+    this->low = -1.0;
     this->is_bounded = true;
 
     // Timing
@@ -91,7 +91,7 @@ void PIDController::operator=(const PIDController& pid)
 
     // Boundary control
     this->high = pid.high;
-	this->low = pid.low;
+    this->low = pid.low;
     this->is_bounded = pid.is_bounded;
 
     // Timing
