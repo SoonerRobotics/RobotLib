@@ -11,5 +11,7 @@
 #include "PIDController.h"
 #include "RobotLibUtil.h"
 #include "StepperMotor.h"
+#include "QuadratureEncoder.h"
+#include "HallEffectEncoder.h"
 
 #endif
