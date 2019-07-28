@@ -27,14 +27,27 @@ public:
     /*
         Linearly interpolates from v0 to v1.
 
-        @param val - start value
-        @param min - end value
-        @param max - interpolation parameter
+        @param v0 - start value
+        @param v1 - end value
+        @param t - interpolation parameter
         @return the interpolated value
     */
     static float lerp(float v0, float v1, float t)
     {
         return (1 - t) * v0 + t * v1;
+    }
+
+    /*
+        Smooth Step interpolates from v0 to v1.
+
+        @param v0 - start value
+        @param v1 - end value
+        @param t - interpolation parameter
+        @return the interpolated value
+    */
+    static float slerp(float v0, float v1, float t)
+    {
+        return lerp(v0, v1, t * t * (3 - 2 * t));
     }
 };
 
