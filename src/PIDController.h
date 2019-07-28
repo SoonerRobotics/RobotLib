@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include "RobotLibUtil.h"
 
+#define MICROS_IN_A_SECOND (float)(1000.0 * 1000.0)
+
 class PIDController
 {
     public:
@@ -45,7 +47,7 @@ class PIDController
         bool is_bounded;
 
         // Timing
-        float last_time;
+        unsigned long last_time;
         float dt;
 };
 

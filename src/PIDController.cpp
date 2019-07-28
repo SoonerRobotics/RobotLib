@@ -26,11 +26,11 @@ PIDController::PIDController()
 
     // Boundary control
     this->high = 1.0;
-    this->low = -1.0;
+	this->low = -1.0;
     this->is_bounded = true;
 
     // Timing
-    this->last_time = millis();
+    this->last_time = micros();
     this->dt = 0.0;
 }
 
@@ -60,11 +60,11 @@ PIDController::PIDController(float init_state, float kp, float ki, float kd)
 
     // Boundary control
     this->high = 1.0;
-    this->low = -1.0;
+	this->low = -1.0;
     this->is_bounded = true;
 
     // Timing
-    this->last_time = millis();
+    this->last_time = micros();
     this->dt = 0.0;
 }
 
@@ -91,7 +91,7 @@ void PIDController::operator=(const PIDController& pid)
 
     // Boundary control
     this->high = pid.high;
-    this->low = pid.low;
+	this->low = pid.low;
     this->is_bounded = pid.is_bounded;
 
     // Timing
@@ -120,7 +120,7 @@ void PIDController::begin(float init_state)
     this->last_state = init_state;
 
     // Timing
-    this->last_time = millis();
+    this->last_time = micros();
     this->dt = 0.0;
 }
 
@@ -149,7 +149,7 @@ void PIDController::begin(float init_state, float kp, float ki, float kd)
     this->kD = kd;
 
     // Timing
-    this->last_time = millis();
+    this->last_time = micros();
     this->dt = 0.0;
 }
 
@@ -212,9 +212,11 @@ float PIDController::update(float target_state, float cur_state)
     float P, I, D;
     float result;
     float slope;
+    unsigned long cur_time;
 
     // Get the time step
-    this->dt = (millis() - this->last_time) / 1000.0;
+    cur_time = micros();
+    this->dt = (float)(cur_time - this->last_time) / MICROS_IN_A_SECOND;
 
     // Calculate error
     this->error = target_state - cur_state;
@@ -227,7 +229,7 @@ float PIDController::update(float target_state, float cur_state)
     slope = (cur_state - this->last_state) / this->dt;
 
     // Apply PID gains
-    P = this->kP * error;
+    P = this->kP * this->error;
     I = this->kI * this->integrator;
     D = this->kD * slope;
 
@@ -237,7 +239,7 @@ float PIDController::update(float target_state, float cur_state)
 
     // Update timing and increment to the next state
     this->last_state = cur_state;
-    this->last_time = millis();
+    this->last_time = cur_time;
 
     // Return the PID result
     return result;
