@@ -7,10 +7,13 @@
  */
 QuadratureEncoder::QuadratureEncoder()
 {
-    this->pin_A = -1;
-	this->pin_B = -1;
+	// Position
 	this->K = 1;
 	this->ticks = 0;
+
+	// Pins
+    this->pin_A = -1;
+	this->pin_B = -1;
 }
 
 
@@ -26,10 +29,13 @@ QuadratureEncoder::QuadratureEncoder(int A, int B, float K)
     pinMode(A, INPUT);
 	pinMode(B, INPUT);
 	
-	this->pin_A = A;
-	this->pin_B = B;
+	// Position
 	this->K = K;
 	this->ticks = 0;
+
+	// Pins
+	this->pin_A = A;
+	this->pin_B = B;
 }
 
 
@@ -43,10 +49,13 @@ void QuadratureEncoder::operator=(const QuadratureEncoder &quad_encoder)
     pinMode(quad_encoder.pin_A, INPUT);
 	pinMode(quad_encoder.pin_B, INPUT);
 	
-	this->pin_A = quad_encoder.pin_A;
-	this->pin_B = quad_encoder.pin_B;
-	this->ticks = quad_encoder.ticks;
+	// Position
 	this->K = quad_encoder.K;
+	this->ticks = quad_encoder.ticks;
+
+	// Pins
+	this->pin_A = quad_encoder.pin_A;
+	this->pin_B = quad_encoder.pin_B;	
 }
 
 
@@ -62,10 +71,13 @@ void QuadratureEncoder::begin(int A, int B, float K)
     pinMode(A, INPUT);
 	pinMode(B, INPUT);
 	
-	this->pin_A = A;
-	this->pin_B = B;
+	// Position
 	this->K = K;
 	this->ticks = 0;
+
+	// Pins
+	this->pin_A = A;
+	this->pin_B = B;
 }
 
 
@@ -75,6 +87,7 @@ void QuadratureEncoder::begin(int A, int B, float K)
  */
 void QuadratureEncoder::process()
 {
+	// Compare the phase of the two pulses in order to find direction
     if(digitalRead(this->pin_A) == digitalRead(this->pin_B))
   	{
     	++ticks;

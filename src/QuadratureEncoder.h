@@ -23,10 +23,11 @@ class QuadratureEncoder : public Encoder
 		float getValue();
 
     private:
+        // Position
         long ticks;
-        float distance;
         float K;
 
+        // Pins
         int pin_A;
         int pin_B;
 
