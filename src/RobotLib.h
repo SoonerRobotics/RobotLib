@@ -13,5 +13,6 @@
 #include "StepperMotor.h"
 #include "QuadratureEncoder.h"
 #include "HallEffectEncoder.h"
+#include "TrackingLoop.h"
 
 #endif
