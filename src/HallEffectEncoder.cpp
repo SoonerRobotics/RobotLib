@@ -45,7 +45,7 @@ HallEffectEncoder::HallEffectEncoder(int pin, int direction, float K)
  */
 void HallEffectEncoder::operator=(const HallEffectEncoder& hall_encoder)
 {
-	pinMode(hall_encoder.pin, INPUT);
+    pinMode(hall_encoder.pin, INPUT);
 
 	// Position
 	this->ticks = hall_encoder.ticks;
@@ -85,7 +85,7 @@ void HallEffectEncoder::begin(int pin, int direction, float K)
  */
 void HallEffectEncoder::set_direction(int direction)
 {
-	this->direction = direction;
+    this->direction = direction;
 }
 
 
@@ -96,13 +96,13 @@ void HallEffectEncoder::set_direction(int direction)
 void HallEffectEncoder::process()
 {
     if (this->direction == CLOCKWISE)
-	{
-		++this->ticks;
-	}
-	else
-	{
-		--this->ticks;
-	}
+    {
+        ++this->ticks;
+    }
+    else
+    {
+        --this->ticks;
+    }
 }
 
 

@@ -24,8 +24,8 @@ class HallEffectEncoder : public Encoder
         void reset();
 
         /* Getters */
-		long getTicks();
-		float getValue();
+        long getTicks();
+        float getValue();
 
     private:
         // Position

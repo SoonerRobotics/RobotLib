@@ -10,12 +10,12 @@ class PIDController
 {
     public:
         // Constructors
-	PIDController();
+        PIDController();
         PIDController(float init_state, float kp, float ki, float kd);
-	
+        
         // Copy assignment
-	void operator=(const PIDController& pid);
-	
+        void operator=(const PIDController& pid);
+        
         // Setters
         void begin(float init_state);
         void begin(float init_state, float kp, float ki, float kd);
@@ -43,7 +43,7 @@ class PIDController
 
         // Boundary control
         float high;
-	float low;
+        float low;
         bool is_bounded;
 
         // Timing

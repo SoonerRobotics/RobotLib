@@ -89,13 +89,13 @@ void QuadratureEncoder::process()
 {
 	// Compare the phase of the two pulses in order to find direction
     if(digitalRead(this->pin_A) == digitalRead(this->pin_B))
-  	{
-    	++ticks;
-  	}
-  	else
-  	{
-    	--ticks;
-	}
+      {
+        ++ticks;
+      }
+      else
+      {
+        --ticks;
+    }
 }
 
 
