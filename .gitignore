@@ -1,3 +1,6 @@
 #ignore build files
 build/
 .vscode/
+
+#ignore coverage files
+out/
