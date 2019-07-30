@@ -1,7 +1,9 @@
 #ifndef ARDUINO_H
 #define ARDUINO_H
 
+#ifndef __AVR__
 #include <cmath>
+#endif
 
 using namespace std;
         
@@ -31,8 +33,9 @@ unsigned long millis();
 unsigned long micros();
 void delay(unsigned long duration);
 void delayMicroseconds(unsigned long duration);
-//float abs(float val);
-
+#ifdef __AVR__
+float abs(float val);
+#endif
 
 //////// Unit Testing Utilities ////////
 int getValueAtPin(int pin);

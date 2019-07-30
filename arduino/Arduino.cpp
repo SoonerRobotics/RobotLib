@@ -40,11 +40,13 @@ void delayMicroseconds(unsigned long duration) {
 	GlobalValues::global_time += duration;
 }
 
-// float abs(float val) {
-// 	if (val < 0)
-// 		return -val;
-// 	return val;
-// }
+#ifdef __AVR__
+float abs(float val) {
+	if (val < 0)
+		return -val;
+	return val;
+}
+#endif
 
 int getValueAtPin(int pin) {
 	if (pin < 0 or pin > 16) {

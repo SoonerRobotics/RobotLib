@@ -7,7 +7,7 @@ cd build
 cmake -DCMAKE_BUILD_TYPE=Coverage ..
 make
 
-#create basline
+#create baseline
 lcov -c -i -d src/CMakeFiles/ -o base.info
 
 #testing

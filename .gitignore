@@ -4,3 +4,4 @@ build/
 
 #ignore coverage files
 out/
+*.gch

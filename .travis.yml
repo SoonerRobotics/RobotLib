@@ -3,8 +3,13 @@ compiler:
   - gcc
 addons:
   apt:
-    packages: lcov
+    packages:
+      - lcov
+      - gcc-avr
+      - binutils-avr
+      - avr-libc
 script: 
+  - ./build-avr.sh
   - ./build.sh
   - make test -C build
 after_success:
