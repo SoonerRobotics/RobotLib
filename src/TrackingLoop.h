@@ -19,8 +19,8 @@ class TrackingLoop
         void update(float measurement);
 
         // Accessors
-        float get_velocity_estimate();
-        float get_accel_estimate();
+        float getVelocityEstimate();
+        float getAccelEstimate();
 
     private:
         // Estimation variables

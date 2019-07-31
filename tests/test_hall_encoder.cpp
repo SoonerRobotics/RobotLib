@@ -43,7 +43,7 @@ TEST_CASE("HallEffectEncoder: Process Input Test")
     REQUIRE(hall.getValue() == Approx(20.0f));
 
     // Reverse direction
-    hall.set_direction(1); // CCW
+    hall.setDirection(1); // CCW
 
     // Run 20 ticks backwards
     for(int i = 0; i < 20; ++i)

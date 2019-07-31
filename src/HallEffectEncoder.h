@@ -19,7 +19,7 @@ class HallEffectEncoder : public Encoder
 
         /* Configuration */
         void begin(int pin, int direction, float K);
-        void set_direction(int direction);
+        void setDirection(int direction);
         void process();
         void reset();
 

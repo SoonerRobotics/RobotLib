@@ -12,7 +12,7 @@ TEST_CASE("Bounding/Clamping Test")
     REQUIRE(pid.update(5.0, 0) == Approx(1.0f));
 
     // Unbind
-    pid.set_bounded(false);
+    pid.setBounded(false);
 
     // Set dt = 1 msec
     addArduinoTimeMillis(1.0);
@@ -21,7 +21,7 @@ TEST_CASE("Bounding/Clamping Test")
     REQUIRE(pid.update(5.0, 0) == Approx(5.0f));
 
     // Rebind
-    pid.set_bounded(true);
+    pid.setBounded(true);
 
     // Set dt = 1 msec
     addArduinoTimeMillis(1.0);
@@ -74,7 +74,7 @@ TEST_CASE("Integral Control Test")
 
     // The integrator function should have the same output as this control
     float result = pid.update(1,1);
-    float integrator = pid.get_integrator_value();
+    float integrator = pid.getIntegratorValue();
     REQUIRE(integrator == Approx(result));
 }
 
@@ -105,7 +105,7 @@ TEST_CASE("Reset and Begin Test")
 
     // Set an initial state
     pid.begin(0, 1, 1, 1);
-    pid.set_bounded(false);
+    pid.setBounded(false);
 
     // Default to dt = 1 sec to avoid errors
     addArduinoTimeMillis(1000.0);
@@ -132,7 +132,7 @@ TEST_CASE("Copy-Assign Test")
 
     // Set an initial state
     pid1.begin(0, 1, 1, 1);
-    pid1.set_bounded(false);
+    pid1.setBounded(false);
 
     // Default to dt = 1 sec to avoid errors
     addArduinoTimeMillis(1000.0);
@@ -156,7 +156,7 @@ TEST_CASE("Set Output Range Test")
     PIDController pid(0, 5, 0, 0);
 
     // Set an output range
-    pid.set_output_range(-0.25, 0.25);
+    pid.setOutputRange(-0.25, 0.25);
 
     // Set dt = 1 sec to add more cumulative error
     addArduinoTimeMillis(1000.0);

@@ -176,7 +176,7 @@ void PIDController::reset()
  * 
  * @param is_bounded 
  */
-void PIDController::set_bounded(bool is_bounded)
+void PIDController::setBounded(bool is_bounded)
 {
     this->is_bounded = is_bounded;
 }
@@ -188,7 +188,7 @@ void PIDController::set_bounded(bool is_bounded)
  * @param lower Lowest allowable output/result
  * @param upper Highest allowable output/result
  */
-void PIDController::set_output_range(float lower, float upper)
+void PIDController::setOutputRange(float lower, float upper)
 {
     this->low = lower;
     this->high = upper;
@@ -251,7 +251,7 @@ float PIDController::update(float target_state, float cur_state)
  * 
  * @return float the integral component of the PID
  */
-float PIDController::get_integrator_value()
+float PIDController::getIntegratorValue()
 {
     return this->kI * this->integrator;
 }

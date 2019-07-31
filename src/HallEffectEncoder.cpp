@@ -83,7 +83,7 @@ void HallEffectEncoder::begin(int pin, int direction, float K)
  * 
  * @param direction CLOCKWISE or COUNTERCLOCKWISE (0 or 1 respectively)
  */
-void HallEffectEncoder::set_direction(int direction)
+void HallEffectEncoder::setDirection(int direction)
 {
     this->direction = direction;
 }

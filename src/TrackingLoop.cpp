@@ -15,8 +15,8 @@ TrackingLoop::TrackingLoop()
     this->accel_pid.begin(0, this->kp, this->ki, 0);
     
     // Unbounded output required on the PID
-    this->vel_pid.set_bounded(false);
-    this->accel_pid.set_bounded(false);
+    this->vel_pid.setBounded(false);
+    this->accel_pid.setBounded(false);
 
     // initialize the estimator
     this->pos_estimate = 0.0;
@@ -40,8 +40,8 @@ TrackingLoop::TrackingLoop(float kp, float ki)
     this->accel_pid.begin(0, this->kp, this->ki, 0);
 
     // Unbounded output required on the PID
-    this->vel_pid.set_bounded(false);
-    this->accel_pid.set_bounded(false);
+    this->vel_pid.setBounded(false);
+    this->accel_pid.setBounded(false);
 
     // initialize the estimator
     this->pos_estimate = 0.0;
@@ -130,7 +130,7 @@ void TrackingLoop::update(float measurement)
  * 
  * @return float velocity estimate
  */
-float TrackingLoop::get_velocity_estimate()
+float TrackingLoop::getVelocityEstimate()
 {
     return this->vel_estimate;
 }
@@ -141,7 +141,7 @@ float TrackingLoop::get_velocity_estimate()
  * 
  * @return float acceleration estimate
  */
-float TrackingLoop::get_accel_estimate()
+float TrackingLoop::getAccelEstimate()
 {
     return this->accel_estimate;
 }

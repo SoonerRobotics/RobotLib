@@ -20,12 +20,12 @@ class PIDController
         void begin(float init_state);
         void begin(float init_state, float kp, float ki, float kd);
         void reset();
-        void set_bounded(bool bounded);
-        void set_output_range(float upper, float lower);
+        void setBounded(bool bounded);
+        void setOutputRange(float upper, float lower);
         
         // Getters
         float update(float target_state, float cur_state);
-        float get_integrator_value();
+        float getIntegratorValue();
 
     private:
         // PID values
