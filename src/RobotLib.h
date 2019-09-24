@@ -6,13 +6,14 @@
  * with one include statement.
  */
 
+#include "BusInOut.h"
 #include "Encoder.h"
+#include "HallEffectEncoder.h"
 #include "Motor.h"
 #include "PIDController.h"
+#include "QuadratureEncoder.h"
 #include "RobotLibUtil.h"
 #include "StepperMotor.h"
-#include "QuadratureEncoder.h"
-#include "HallEffectEncoder.h"
 #include "TrackingLoop.h"
 
 #endif
