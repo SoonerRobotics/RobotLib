@@ -26,8 +26,9 @@ void BusInOut::mode(int mode) {
 
 void BusInOut::write(int value) {
     for (int i=0; i<16; i++) {
-        if (_pin[i] != -1)
-            digitalWrite(_pin[i], (value >> i) && 1);
+        if (_pin[i] != -1) {
+            digitalWrite(_pin[i], (value >> i) & 1);
+        }
     }
 }
 
@@ -35,6 +36,7 @@ int BusInOut::read() {
     int value = 0;
     for (int i=0; i<16; i++) {
         if (_pin[i] != -1)
-            value = (value << 1) + digitalRead(_pin[i]);
+            value |= digitalRead(_pin[i]) << i;
     }
+    return value;
 }
