@@ -12,8 +12,6 @@ class BusInOut
              int p8 = -1, int p9 = -1, int p10 = -1, int p11 = -1,
              int p12 = -1, int p13 = -1, int p14 = -1, int p15 = -1);
 
-        BusInOut(int pins[16]);
-
         void mode(int mode);
 
         void write(int value);

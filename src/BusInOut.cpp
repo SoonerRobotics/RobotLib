@@ -11,12 +11,6 @@ BusInOut::BusInOut(int p0, int p1, int p2, int p3,
     }
 }
 
-BusInOut::BusInOut(int  pins[]) {
-    for (int i=0; i<16; i++) {
-        _pin[i] = pins[i];
-    }
-}
-
 void BusInOut::mode(int mode) {
     for (int i=0; i<16; i++) {
         if (_pin[i] != -1)
