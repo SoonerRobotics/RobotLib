@@ -10,7 +10,8 @@ TEST_CASE("Constructors and mode")
     REQUIRE(getModeAtPin(2) == INPUT_PULLUP);
     REQUIRE(getModeAtPin(4) == INPUT_PULLUP);
 
-    BusInOut test2({5,6,7});
+    int pins[] = {5,6,7};
+    BusInOut test2(pins);
     test2.mode(OUTPUT);
 
     REQUIRE(getModeAtPin(5) == OUTPUT);
