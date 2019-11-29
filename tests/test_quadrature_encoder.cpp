@@ -17,6 +17,13 @@ TEST_CASE("QuadratureEncoder: Constructor Arguments Test")
     REQUIRE(quad.getValue() == Approx(0.0f));
     REQUIRE(getModeAtPin(1) == INPUT);
     REQUIRE(getModeAtPin(2) == INPUT);
+
+    QuadratureEncoder quad2(1, 2, 1, true);
+
+    REQUIRE(quad.getTicks() == 0);
+    REQUIRE(quad.getValue() == Approx(0.0f));
+    REQUIRE(getModeAtPin(1) == INPUT_PULLUP);
+    REQUIRE(getModeAtPin(2) == INPUT_PULLUP);
 }
 
 TEST_CASE("QuadratureEncoder: Begin Test")
@@ -29,6 +36,13 @@ TEST_CASE("QuadratureEncoder: Begin Test")
     REQUIRE(quad.getValue() == Approx(0.0f));
     REQUIRE(getModeAtPin(1) == INPUT);
     REQUIRE(getModeAtPin(2) == INPUT);
+
+    quad.begin(1, 2, 1, true);
+
+    REQUIRE(quad.getTicks() == 0);
+    REQUIRE(quad.getValue() == Approx(0.0f));
+    REQUIRE(getModeAtPin(1) == INPUT_PULLUP);
+    REQUIRE(getModeAtPin(2) == INPUT_PULLUP);
 }
 
 TEST_CASE("QuadratureEncoder: Process Input Test")
@@ -83,6 +97,20 @@ TEST_CASE("QuadratureEncoder: Reset Test")
     REQUIRE(quad.getValue() == Approx(0.0));
 }
 
+TEST_CASE("QuadratureEncoder: Pullup Test")
+{
+    QuadratureEncoder quad;
+
+    quad.begin(1, 2, 1);
+
+    REQUIRE(getModeAtPin(1) == INPUT);
+    REQUIRE(getModeAtPin(2) == INPUT);
+
+    quad.pullup();
+
+    REQUIRE(getModeAtPin(1) == INPUT_PULLUP);
+    REQUIRE(getModeAtPin(2) == INPUT_PULLUP);
+}
 
 TEST_CASE("QuadratureEncoder: Copy-Assign Test")
 {
