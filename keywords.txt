@@ -6,6 +6,7 @@ QuadratureEncoder	KEYWORD1
 RLUtil	KEYWORD1
 StepperMotor	KEYWORD1
 TrackingLoop	KEYWORD1
+pullup	KEYWORD2
 process	KEYWORD2
 reset	KEYWORD2
 getTicks	KEYWORD2
