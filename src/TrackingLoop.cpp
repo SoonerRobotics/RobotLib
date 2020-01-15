@@ -108,7 +108,7 @@ void TrackingLoop::update(float measurement)
     float model_vel;
 
     // Get the elapsed time (sec)
-    dt = max((float)(millis() - this->last_time), 1.0) / 1000.0;
+    dt = fmax((float)(millis() - this->last_time), 1.0) / 1000.0;
 
     // Estimate the position and velocity from the state estimates
     this->pos_estimate += this->vel_estimate * dt;
