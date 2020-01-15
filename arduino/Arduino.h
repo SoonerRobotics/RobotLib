@@ -1,6 +1,9 @@
 #ifndef ARDUINO_H
 #define ARDUINO_H
 
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 #ifndef __AVR__
 #include <cmath>
 #endif
