@@ -4,7 +4,7 @@
 
 /**
  * @brief Construct a new Tracking Loop object
- * 
+ *
  */
 TrackingLoop::TrackingLoop()
 {
@@ -13,7 +13,7 @@ TrackingLoop::TrackingLoop()
     this->ki = 900.0;
     this->vel_pid.begin(0, this->kp, this->ki, 0);
     this->accel_pid.begin(0, this->kp, this->ki, 0);
-    
+
     // Unbounded output required on the PID
     this->vel_pid.setBounded(false);
     this->accel_pid.setBounded(false);
@@ -27,7 +27,7 @@ TrackingLoop::TrackingLoop()
 
 /**
  * @brief Construct a new Tracking Loop object with PI gains
- * 
+ *
  * @param kp proportional gain
  * @param ki integral gain
  */
@@ -52,7 +52,7 @@ TrackingLoop::TrackingLoop(float kp, float ki)
 
 /**
  * @brief Copy assignment operation
- * 
+ *
  * @param tracker another tracking loop
  */
 void TrackingLoop::operator=(const TrackingLoop& tracker)
@@ -63,7 +63,7 @@ void TrackingLoop::operator=(const TrackingLoop& tracker)
     this->vel_pid = tracker.vel_pid;
     this->kp = tracker.kp;
     this->ki = tracker.ki;
-    
+
     // Timing
     this->last_time = tracker.last_time;
 
@@ -76,7 +76,7 @@ void TrackingLoop::operator=(const TrackingLoop& tracker)
 
 /**
  * @brief Resets the tracking loop
- * 
+ *
  */
 void TrackingLoop::reset()
 {
@@ -98,7 +98,7 @@ void TrackingLoop::reset()
 
 /**
  * @brief Updates the tracking loop with a position measurement
- * 
+ *
  * @param measurement the encoder position
  */
 void TrackingLoop::update(float measurement)
@@ -108,8 +108,8 @@ void TrackingLoop::update(float measurement)
     float model_vel;
 
     // Get the elapsed time (sec)
-    dt = (float)(millis() - this->last_time) / 1000.0;
-    
+    dt = max((float)(millis() - this->last_time), 1.0) / 1000.0;
+
     // Estimate the position and velocity from the state estimates
     this->pos_estimate += this->vel_estimate * dt;
     model_vel = this->vel_estimate + (this->accel_estimate * dt);
@@ -126,8 +126,19 @@ void TrackingLoop::update(float measurement)
 
 
 /**
+ * @brief Get the position estimate for this tracker
+ *
+ * @return float position estimate
+ */
+float TrackingLoop::getPositionEstimate()
+{
+    return this->pos_estimate;
+}
+
+
+/**
  * @brief Get the velocity estimate for this tracker
- * 
+ *
  * @return float velocity estimate
  */
 float TrackingLoop::getVelocityEstimate()
@@ -138,7 +149,7 @@ float TrackingLoop::getVelocityEstimate()
 
 /**
  * @brief Get an acceleration estimate from the tracker
- * 
+ *
  * @return float acceleration estimate
  */
 float TrackingLoop::getAccelEstimate()
