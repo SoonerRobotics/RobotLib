@@ -19,6 +19,7 @@ class TrackingLoop
         void update(float measurement);
 
         // Accessors
+        float getPositionEstimate();
         float getVelocityEstimate();
         float getAccelEstimate();
 
