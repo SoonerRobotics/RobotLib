@@ -7,7 +7,7 @@
 
 /**
  * @brief Construct a new PIDController object
- * 
+ *
  */
 PIDController::PIDController()
 {
@@ -37,7 +37,7 @@ PIDController::PIDController()
 
 /**
  * @brief Construct a new PIDController object
- * 
+ *
  * @param init_state starting state of the system
  * @param kp proportional coefficient
  * @param ki integral coefficient
@@ -71,7 +71,7 @@ PIDController::PIDController(float init_state, float kp, float ki, float kd)
 
 /**
  * @brief Copy and assign a PIDController into another one
- * 
+ *
  * @param pid a PID controller to copy and assign
  */
 void PIDController::operator=(const PIDController& pid)
@@ -106,7 +106,7 @@ void PIDController::operator=(const PIDController& pid)
 
 /**
  * @brief Initializes the PID controller
- * 
+ *
  * @param init_state starting state of the system
  */
 void PIDController::begin(float init_state)
@@ -127,7 +127,7 @@ void PIDController::begin(float init_state)
 
 /**
  * @brief Initializes a PIDController
- * 
+ *
  * @param init_state starting state of the system
  * @param kp proportional coefficient
  * @param ki integral coefficient
@@ -157,7 +157,7 @@ void PIDController::begin(float init_state, float kp, float ki, float kd)
 /**
  * @brief Resets the PID controller's state.
  * Note: you must reinitialize the PID with begin() before running it again.
- * 
+ *
  */
 void PIDController::reset()
 {
@@ -173,8 +173,8 @@ void PIDController::reset()
 
 /**
  * @brief Sets if the output/result is bounded by a clamp
- * 
- * @param is_bounded 
+ *
+ * @param is_bounded
  */
 void PIDController::setBounded(bool is_bounded)
 {
@@ -184,7 +184,7 @@ void PIDController::setBounded(bool is_bounded)
 
 /**
  * @brief Sets the clamping boundaries on the output/result
- * 
+ *
  * @param lower Lowest allowable output/result
  * @param upper Highest allowable output/result
  */
@@ -201,7 +201,7 @@ void PIDController::setOutputRange(float lower, float upper)
 
 /**
  * @brief Updates the PID equation and returns the result
- * 
+ *
  * @param target_state the goal state of the system
  * @param cur_state the current state of the system
  * @return float the output/result/control signal needed to optimize the state
@@ -226,7 +226,7 @@ float PIDController::update(float target_state, float cur_state)
     this->integrator += 0.5 * (this->error + this->prev_error) * this->dt;
 
     // Find the slope of the error curve using secant approximation
-    slope = (cur_state - this->last_state) / this->dt;
+    slope = (this->error - this->prev_error) / this->dt;
 
     // Apply PID gains
     P = this->kP * this->error;
@@ -248,7 +248,7 @@ float PIDController::update(float target_state, float cur_state)
 
 /**
  * @brief Gets the integral part of the PID controller
- * 
+ *
  * @return float the integral component of the PID
  */
 float PIDController::getIntegratorValue()
