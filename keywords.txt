@@ -32,3 +32,5 @@ setRPM	KEYWORD2
 getCurrentSteps	KEYWORD2
 getVelocityEstimate	KEYWORD2
 getAccelEstimate	KEYWORD2
+setIntegratorBounds KEYWORD2
+setTolerance        KEYWORD2
