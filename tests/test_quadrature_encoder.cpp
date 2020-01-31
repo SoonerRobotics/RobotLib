@@ -45,9 +45,10 @@ TEST_CASE("QuadratureEncoder: Begin Test")
     REQUIRE(getModeAtPin(2) == INPUT_PULLUP);
 }
 
-TEST_CASE("QuadratureEncoder: Process Input Test")
+TEST_CASE("QuadratureEncoder: X1 Resolution Process Input Test")
 {
     QuadratureEncoder quad(1, 2, 3);
+    quad.setResolution(1);
 
     // Simulate forward motion
     setValueAtPin(1, HIGH);
@@ -74,6 +75,78 @@ TEST_CASE("QuadratureEncoder: Process Input Test")
 
     REQUIRE(quad.getTicks() == -10);
     REQUIRE(quad.getValue() == Approx(-30.0));
+}
+
+TEST_CASE("QuadratureEncoder: X2 Resolution Process Input Test")
+{
+    QuadratureEncoder quad(1, 2, 3);
+    quad.setResolution(2);
+
+    // Simulate forward motion
+    int states[2] = {0b11, 0b00};
+
+    // Run 10 ticks forward
+    for(int i = 0; i < 10; ++i)
+    {
+        setValueAtPin(1, (states[i%2] & 0b10) >> 1);
+        setValueAtPin(2, states[i%2] & 0b01);
+        quad.process();
+    }
+
+    REQUIRE(quad.getTicks() == 10);
+    REQUIRE(quad.getValue() == Approx(30.0));
+
+    // Simulate forward motion
+    int states2[2] = {0b10, 0b01};
+
+    // Run 20 ticks backward
+    // Note that the first tick will go from (00 to 10) which is invalid
+    // and thus ignored. So we do 21 pulses to go back 20 ticks.
+    for(int i = 0; i < 21; ++i)
+    {
+        setValueAtPin(1, (states2[i%2] & 0b10) >> 1);
+        setValueAtPin(2, states2[i%2] & 0b01);
+        quad.process();
+    }
+
+    REQUIRE(quad.getTicks() == -10);
+    REQUIRE(quad.getValue() == Approx(-30.0));
+}
+
+TEST_CASE("QuadratureEncoder: X4 Resolution Process Input Test")
+{
+    QuadratureEncoder quad(1, 2, 3);
+    quad.setResolution(4);
+
+    // Simulate forward motion
+    int states[4] = {0b01, 0b11, 0b10, 0b00};
+
+    // Run 12 ticks forward
+    for(int i = 0; i < 12; ++i)
+    {
+        setValueAtPin(1, (states[i%4] & 0b10) >> 1);
+        setValueAtPin(2, states[i%4] & 0b01);
+        quad.process();
+    }
+
+    REQUIRE(quad.getTicks() == 12);
+    REQUIRE(quad.getValue() == Approx(36.0));
+
+    // Simulate forward motion
+    int states2[4] = {0b00, 0b10, 0b11, 0b01};
+
+    // Run 24 ticks backward
+    // Note that the first tick will go from (00 to 00) which is invalid
+    // and thus ignored. So we do 21 pulses to go back 20 ticks.
+    for(int i = 0; i < 25; ++i)
+    {
+        setValueAtPin(1, (states2[i%4] & 0b10) >> 1);
+        setValueAtPin(2, states2[i%4] & 0b01);
+        quad.process();
+    }
+
+    REQUIRE(quad.getTicks() == -12);
+    REQUIRE(quad.getValue() == Approx(-36.0));
 }
 
 TEST_CASE("QuadratureEncoder: Reset Test")
@@ -115,6 +188,7 @@ TEST_CASE("QuadratureEncoder: Pullup Test")
 TEST_CASE("QuadratureEncoder: Copy-Assign Test")
 {
     QuadratureEncoder quad1(1, 2, 3), quad2;
+    quad1.setResolution(1);
 
     // Simulate forward motion
     setValueAtPin(1, HIGH);

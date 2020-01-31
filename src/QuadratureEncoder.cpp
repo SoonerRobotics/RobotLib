@@ -74,10 +74,14 @@ void QuadratureEncoder::operator=(const QuadratureEncoder &quad_encoder)
 {
     pinMode(quad_encoder.pin_A, quad_encoder.pin_mode);
     pinMode(quad_encoder.pin_B, quad_encoder.pin_mode);
+
+    // Configuration
+    this->resolution = quad_encoder.resolution;
     
     // Position
     this->K = quad_encoder.K;
     this->ticks = quad_encoder.ticks;
+    this->lastState = quad_encoder.lastState;
 
     // Pins
     this->pin_A = quad_encoder.pin_A;
@@ -133,6 +137,20 @@ void QuadratureEncoder::begin(int A, int B, float K, int pullup)
 }
 
 /**
+ * @brief Set the encoder resolution. 1x, 2x, or 4x.
+ * 
+ * For 1x resolution, have an interrupt on the A pin on either rise or fall.
+ * For 2x resolution, have an interrupt on the A pin on both rise and fall (change).
+ * For 4x resolution, have an interrupt on both the A and B pins on both rise and fall (change).
+ * All interrupts should call the process function.
+ */
+void QuadratureEncoder::setResolution(int resolution) {
+    if (resolution == 1 || resolution == 2 || resolution == 4) {
+        this->resolution = resolution;
+    }
+}
+
+/**
  * @brief Set the pinMode for both pins to pull up inputs
  * 
  */
@@ -149,14 +167,61 @@ void QuadratureEncoder::pullup()
  */
 void QuadratureEncoder::process()
 {
-    // Compare the phase of the two pulses in order to find direction
-    if(digitalRead(this->pin_A) == digitalRead(this->pin_B))
-      {
-        ++ticks;
-      }
-      else
-      {
-        --ticks;
+    if (this->resolution == 1) {
+        // 1x resolution
+
+        // Compare the phase of the two pulses in order to find direction
+        if(digitalRead(this->pin_A) == digitalRead(this->pin_B))
+        {
+            ++ticks;
+        }
+        else
+        {
+            --ticks;
+        }
+    } else if (this -> resolution == 2) {
+        // 2x resolution
+
+        int curState = digitalRead(this->pin_A) << 1 | digitalRead(this->pin_B);
+
+        // 00 -> 11 -> 00 -> 11 is one direction
+        // 10 -> 01 -> 10 -> 01 is the other direction
+        if ((lastState == 0b11 && curState == 0b00) ||
+            (lastState == 0b00 && curState == 0b11)) {
+                ++ticks;
+            }
+        else if ((lastState == 0b10 && curState == 0b01) ||
+            (lastState == 0b01 && curState == 0b10)) {
+                --ticks;
+            }
+
+        // Set last state to current state
+        lastState = curState;
+    } else if (this -> resolution == 4) {
+        // 4x resolution 
+        int curState = digitalRead(this->pin_A) << 1 | digitalRead(this->pin_B);
+
+        // States will go 00 -> 01 -> 11 -> 10 -> 00 (grey code).
+        // Forward through them is one direction, backwards is the other direction.
+
+        // curState ^ lastState is XOR of the states. If they are 0x11, then two bits
+        // changed which violates grey code and is invalid. Similarly, if the state
+        // doesn't change it is invalid beause at least one bit should change.
+        if (((curState ^ lastState) != 0x11) && (curState != lastState)) {
+            // 2 bit state. Right hand bit of prev XOR left hand bit of current
+            // gives 0 if clockwise rotation and 1 if counter clockwise rotation.
+            // From QEI implementation https://os.mbed.com/users/aberk/code/QEI/
+            int change = (lastState & 0b01) ^ ((curState & 0b10) >> 1);
+ 
+            if (change == 0) {
+                change = -1;
+            }
+ 
+            ticks -= change;
+        }
+
+        // Set last state to current state
+        lastState = curState;
     }
 }
 

@@ -17,6 +17,7 @@ class QuadratureEncoder : public Encoder
         /* Configuration */
         void begin(int A, int B, float K);
         void begin(int A, int B, float K, int pullup);
+        void setResolution(int resolution);
         void pullup();
         void process();
         void reset();
@@ -26,8 +27,12 @@ class QuadratureEncoder : public Encoder
         float getValue();
 
     private:
+        // Configuration
+        int resolution = 2;
+
         // Position
-        long ticks;
+        volatile long ticks;
+        int lastState = 0;
         float K;
 
         // Pins

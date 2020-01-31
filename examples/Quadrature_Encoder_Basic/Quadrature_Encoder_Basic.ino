@@ -22,10 +22,11 @@ void pinAInterrupt() {
 // Setup happens only once, when the Arduino is first powered on or reset.
 void setup() {
   // Initialize encoder on pins 1 and 2 with K-value 3.5.
+  // Default encoder resolution is 2x.
   encoder.begin(1, 2, 3.5);
 
   // Attach an interrupt to pin 1 to call pinAInterrupt.
-  attachInterrupt(digitalPinToInterrupt(1), pinAInterrupt, RISING);
+  attachInterrupt(digitalPinToInterrupt(1), pinAInterrupt, CHANGE);
 
   // Begin serial so we can communicate with PC
   Serial.begin(9600);
