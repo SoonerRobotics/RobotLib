@@ -12,23 +12,26 @@ class PIDController
         // Constructors
         PIDController();
         PIDController(float init_state, float kp, float ki, float kd);
-        
+
         // Copy assignment
         void operator=(const PIDController& pid);
-        
+
         // Setters
         void begin(float init_state);
         void begin(float init_state, float kp, float ki, float kd);
         void reset();
         void setBounded(bool bounded);
         void setOutputRange(float upper, float lower);
-        
+        void setTolerance(float setpoint_tol, float derivative_tol, bool apply_tolerance);
+        void setIntegratorBounds(float min, float max);
+
         // Getters
         float update(float target_state, float cur_state);
         float getIntegratorValue();
 
     private:
         // PID values
+        float derivative;
         float integrator;
         float error;
 
@@ -49,6 +52,15 @@ class PIDController
         // Timing
         unsigned long last_time;
         float dt;
+
+        // Tolerance control
+        float setpoint_tolerance;
+        float derivative_tolerance;
+        bool tolerance_enabled;
+
+        // Integrator controls
+        float integrator_min;
+        float integrator_max;
 };
 
 #endif // PIDCONTROLLER_H

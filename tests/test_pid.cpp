@@ -75,7 +75,7 @@ TEST_CASE("Integral Control Test")
     // The integrator function should have the same output as this control
     float result = pid.update(1,1);
     float integrator = pid.getIntegratorValue();
-    REQUIRE(integrator == Approx(result));
+    REQUIRE(integrator == Approx(2 * result));
 }
 
 TEST_CASE("Derivative Control Test")
@@ -175,4 +175,81 @@ TEST_CASE("High Frequency Loop Test")
 
     // Output range should be a real value despite the short update time
     REQUIRE(pid.update(4, 1) == Approx(0.3));
+}
+
+TEST_CASE("Tolerance test")
+{
+    PIDController pid(0, 1, 0, 0);
+
+    // Set dt = 1 sec
+    addArduinoTimeMillis(1000);
+
+    // Set a wide tolerance
+    pid.setTolerance(2, 2, true);
+
+    // Simulate being closer by 1
+    // Derivative = -1, Error = 1
+    float pid_output = pid.update(2, 1);
+
+    // There should be no output
+    REQUIRE(pid_output == Approx(0.0));
+
+    // Reset the PID
+    pid.reset();
+
+    // Disable the tolerance
+    pid.setTolerance(0, 0, false);
+
+    // Set dt = 1 sec
+    addArduinoTimeMillis(1000);
+
+    // There should be actual output now
+    REQUIRE(pid.update(2,1) == Approx(1.0));
+
+    // Reset the PID
+    pid.reset();
+
+    // Set a really thin tolerance
+    pid.setTolerance(0.25, 0.5, true);
+
+    // Set dt = 1 sec
+    addArduinoTimeMillis(1000);
+
+    // There should be output
+    REQUIRE(pid.update(2,1) == Approx(1.0));
+
+    // Set dt = 1 sec
+    addArduinoTimeMillis(1000);
+
+    // There should be output
+    REQUIRE(pid.update(2,1.5) == Approx(0.5));
+
+    // Set dt = 1 sec
+    addArduinoTimeMillis(1000);
+
+    // There should be output
+    REQUIRE(pid.update(2,2.1) == Approx(-0.1));
+
+    // Set dt = 1 sec
+    addArduinoTimeMillis(1000);
+
+    // There should not be output
+    REQUIRE(pid.update(2,2) == Approx(0.0));
+}
+
+TEST_CASE("Integrator Test")
+{
+    PIDController pid(0, 1, 0, 0);
+
+    // Set the integrator range
+    pid.setIntegratorBounds(-1, 1);
+
+    // Set dt = 1 sec
+    addArduinoTimeMillis(1000);
+
+    // Make the integrator bigger than the bounds
+    pid.update(2, 0);
+
+    // Integrator should be limited by the clamp
+    REQUIRE(pid.getIntegratorValue() == Approx(1.0));
 }
