@@ -282,7 +282,7 @@ float PIDController::update(float target_state, float cur_state)
     this->integrator += 0.5 * (this->error + this->prev_error) * this->dt;
 
     // Find the slope of the error curve using secant approximation
-    this->derivative = (cur_state - this->last_state) / this->dt;
+    this->derivative = (this->error - this->prev_error) / this->dt;
 
     // Clamp integrator if the integrator boundaries have been set
     if(this->integrator_max > this->integrator_min)
