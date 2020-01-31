@@ -1,7 +1,7 @@
 #include <PIDController.h>
 #include <catch.hpp>
 
-TEST_CASE("Bounding/Clamping Test") 
+TEST_CASE("Bounding/Clamping Test")
 {
     PIDController pid(0, 1, 0, 0);
 
@@ -30,7 +30,7 @@ TEST_CASE("Bounding/Clamping Test")
     REQUIRE(pid.update(5.0, 0) == Approx(1.0f));
 }
 
-TEST_CASE("Proportional Control Test") 
+TEST_CASE("Proportional Control Test")
 {
     PIDController pid;
 
@@ -41,16 +41,16 @@ TEST_CASE("Proportional Control Test")
     addArduinoTimeMillis(1.0);
 
     // An error of 1 should produce 0.5 as output
-    REQUIRE(pid.update(2.0, 1.0) == Approx(0.5f)); 
+    REQUIRE(pid.update(2.0, 1.0) == Approx(0.5f));
 
     // Set dt = 1 msec
     addArduinoTimeMillis(1.0);
 
     // An error of -1 should produce -0.5 as output
-    REQUIRE(pid.update(-2.0, -1.0) == Approx(-0.5f)); 
+    REQUIRE(pid.update(-2.0, -1.0) == Approx(-0.5f));
 }
 
-TEST_CASE("Integral Control Test") 
+TEST_CASE("Integral Control Test")
 {
     PIDController pid;
 
@@ -61,13 +61,13 @@ TEST_CASE("Integral Control Test")
     addArduinoTimeMillis(1000.0);
 
     // Last error: 1, current error: 0.5 -> integral += 0.75 -> result = 0.375
-    REQUIRE(pid.update(1, 0.5) == Approx(0.375f)); 
+    REQUIRE(pid.update(1, 0.5) == Approx(0.375f));
 
     // Set dt = 1 sec to add more cumulative error
     addArduinoTimeMillis(1000.0);
 
     // Last error: 0.5, current error: 0.25 -> integral += 0.375 -> result += 0.1875
-    REQUIRE(pid.update(1, 0.75) == Approx(0.5625f)); 
+    REQUIRE(pid.update(1, 0.75) == Approx(0.5625f));
 
     // Set dt = 1 sec to add more cumulative error
     addArduinoTimeMillis(1000.0);
@@ -78,7 +78,7 @@ TEST_CASE("Integral Control Test")
     REQUIRE(integrator == Approx(result));
 }
 
-TEST_CASE("Derivative Control Test") 
+TEST_CASE("Derivative Control Test")
 {
     PIDController pid;
 
@@ -88,18 +88,18 @@ TEST_CASE("Derivative Control Test")
     // Default to dt = 1 sec to avoid errors
     addArduinoTimeMillis(1000.0);
 
-    // Last state: 0, current state: 1 -> slope = 1 -> 0.5
-    REQUIRE(pid.update(2, 1) == Approx(0.5f)); 
+    // Previous error: 2, current error: 1 -> slope = -1 -> -0.5
+    REQUIRE(pid.update(2, 1) == Approx(-0.5f));
 
     // Set dt = 1 sec to add more cumulative error
     addArduinoTimeMillis(1000.0);
 
-    // Last state: 1, current state: 1.5 -> slope = 0.5 -> 0.25
-    REQUIRE(pid.update(2, 1.5) == Approx(0.25f)); 
+    // Last error: 1, current error: 0.5 -> slope = -0.5 -> -0.25
+    REQUIRE(pid.update(2, 1.5) == Approx(-0.25f));
 }
 
 
-TEST_CASE("Reset and Begin Test") 
+TEST_CASE("Reset and Begin Test")
 {
     PIDController pid;
 
@@ -111,7 +111,7 @@ TEST_CASE("Reset and Begin Test")
     addArduinoTimeMillis(1000.0);
 
     // Run an update
-    pid.update(2, 1);   // This will produce a results of 1 + 1.5 + 1 = 3.5
+    pid.update(2, 1);   // This will produce a results of 1 + 1.5 - 1 = 1.5
 
     // Reset the controller
     pid.reset();
@@ -123,7 +123,7 @@ TEST_CASE("Reset and Begin Test")
     addArduinoTimeMillis(1000.0);
 
     // The controller should get the same value as before, since this is the first run
-    REQUIRE(pid.update(2, 1) == Approx(3.5f)); 
+    REQUIRE(pid.update(2, 1) == Approx(1.5f));
 }
 
 TEST_CASE("Copy-Assign Test")
@@ -138,7 +138,7 @@ TEST_CASE("Copy-Assign Test")
     addArduinoTimeMillis(1000.0);
 
     // Run an update
-    pid1.update(2, 1);   // This will produce a results of 1 + 1.5 + 1 = 3.5
+    pid1.update(2, 1);   // This will produce a results of 1 + 1.5 - 1 = 1.5
 
     // Set pid2 equal to pid1
     pid2 = pid1;
@@ -147,8 +147,8 @@ TEST_CASE("Copy-Assign Test")
     addArduinoTimeMillis(1000.0);
 
     // Run another update, but use pid2
-    // Result should be 0.5 + 2.25 + 0.5
-    REQUIRE(pid2.update(2, 1.5) == Approx(3.25));
+    // Result should be 0.5 + 2.25 - 0.5
+    REQUIRE(pid2.update(2, 1.5) == Approx(2.25));
 }
 
 TEST_CASE("Set Output Range Test")
