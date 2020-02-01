@@ -17,4 +17,4 @@ ctest --output-on-failure .
 lcov -c -d tests/CMakeFiles/ -o test.info
 lcov -l test.info #debug
 lcov -a base.info -a test.info -o total.info #merge base and test info
-lcov -r total.info '/usr/*' 'catchlib/*' 'tests/*' -o total.info #remove trash
+lcov -r total.info '/usr/*' '*/catchlib/*' '*/tests/*' -o total.info #remove trash
