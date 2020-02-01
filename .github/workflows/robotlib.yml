@@ -1,0 +1,20 @@
+name: RobotLib CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install deps
+      run: sudo apt-get install lcov gcc-avr binutils-avr avr-libc
+    - name: Run build-avr
+      run: ./build-avr.sh
+    - name: Run build
+      run: ./build.sh
+    - name: Make Test
+      run: make test -C build
+    - name: Upload coverage
+      if: success()
+      run: bash <(curl -s https://codecov.io/bash) -f build/total.info || echo "Codecov did not collect coverage reports"
