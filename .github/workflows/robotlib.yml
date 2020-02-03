@@ -1,0 +1,23 @@
+name: RobotLib CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install deps
+      run: sudo apt-get install lcov gcc-avr binutils-avr avr-libc
+    - name: Run build-avr
+      run: ./build-avr.sh
+    - name: Run build
+      run: ./build.sh
+    - name: Make Test
+      run: make test -C build
+    - name: Upload coverage
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: build/total.info
+        fail_ci_if_error: true
