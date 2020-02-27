@@ -1,7 +1,8 @@
-#ignore build files
+# Ignore build and dev files
 build/
+keywords/
 .vscode/
 
-#ignore coverage files
+# Ignore coverage files
 out/
 *.gch

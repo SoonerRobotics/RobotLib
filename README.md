@@ -11,3 +11,7 @@ You can view examples using RobotLib in Arduino. Go to File > Examples > RobotLi
 ## Installation and Documentation
 
 Instructions for how to install as well as documentation are both available on [our Github wiki](https://github.com/Sooner-Competitive-Robotics/RobotLib/wiki).
+
+## Contributing
+
+Please see [tests/README.md](tests/README.md).
