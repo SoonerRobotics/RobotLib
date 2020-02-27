@@ -1,5 +1,5 @@
 # Generate keywords from src folder into ../keywords.txt
-arduino-keywords src --output ..
+~/.local/bin/arduino-keywords src --output ..
 
 # Remove operator= from keywords.txt
 sed -i '/operator=/d' keywords.txt

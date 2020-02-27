@@ -2,7 +2,7 @@
 mkdir keywords
 
 # Build keywords into that folder, ignore output
-arduino-keywords src --output ../keywords
+~/.local/bin/arduino-keywords src --output ../keywords
 
 # Remove operator= from keywords.txt
 sed -i '/operator=/d' keywords/keywords.txt
