@@ -8,7 +8,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install deps
-      run: sudo apt-get install lcov gcc-avr binutils-avr avr-libc
+      run: ./install-deps.sh
+    - name: Verify keywords
+      run: ./verify-keywords.sh
     - name: Run build-avr
       run: ./build-avr.sh
     - name: Run build

@@ -1,19 +1,25 @@
-#make build dir
+# Generate keywords from src folder into ../keywords.txt
+arduino-keywords src --output ..
+
+# Remove operator= from keywords.txt
+sed -i '/operator=/d' keywords.txt
+
+# Make build dir
 rm -r build #for local development
 mkdir build
 cd build
 
-#make the project
+# Make the project
 cmake -DCMAKE_BUILD_TYPE=Coverage ..
 make
 
-#create baseline
+# Create baseline
 lcov -c -i -d src/CMakeFiles/ -o base.info
 
-#testing
+# Testing
 ctest --output-on-failure .
 
-#merge baseline with testing
+# Merge baseline with testing
 lcov -c -d tests/CMakeFiles/ -o test.info
 lcov -l test.info #debug
 lcov -a base.info -a test.info -o total.info #merge base and test info
