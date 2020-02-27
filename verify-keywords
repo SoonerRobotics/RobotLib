@@ -3,6 +3,7 @@ import os
 import sys
 
 # Run arduino-keywords
+os.system("mkdir keywords")
 os.system("~/.local/bin/arduino-keywords src --output ../keywords > /dev/null 2>&1")
 os.system("sed -i '/operator=/d' keywords/keywords.txt > /dev/null 2>&1")
 
