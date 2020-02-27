@@ -1,8 +1,8 @@
 # Make temporary folder to hold "correct" keywords
-mkdir keywords > /dev/null 2>&1
+mkdir keywords
 
 # Build keywords into that folder, ignore output
-arduino-keywords src --output ../keywords > /dev/null 2>&1
+arduino-keywords src --output ../keywords
 
 # Remove operator= from keywords.txt
 sed -i '/operator=/d' keywords/keywords.txt
