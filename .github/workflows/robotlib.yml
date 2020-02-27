@@ -10,7 +10,7 @@ jobs:
     - name: Install deps
       run: ./install-deps.sh
     - name: Verify keywords
-      run: ./verify-keywords.sh
+      run: ./verify-keywords
     - name: Run build-avr
       run: ./build-avr.sh
     - name: Run build
