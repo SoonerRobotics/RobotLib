@@ -21,7 +21,7 @@ class PIDController
         void begin(float init_state, float kp, float ki, float kd);
         void reset();
         void setBounded(bool bounded);
-        void setOutputRange(float upper, float lower);
+        void setOutputRange(float lower, float upper);
         void setTolerance(float setpoint_tol, float derivative_tol, bool apply_tolerance);
         void setIntegratorBounds(float min, float max);
 
