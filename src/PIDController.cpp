@@ -267,7 +267,6 @@ float PIDController::update(float target_state, float cur_state)
     // Declare local variables
     float P, I, D;
     float result;
-    float slope;
     unsigned long cur_time;
 
     // Get the time step
